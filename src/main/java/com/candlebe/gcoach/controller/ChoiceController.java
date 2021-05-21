@@ -9,6 +9,7 @@ import com.candlebe.gcoach.service.ChoiceEmotionService;
 import com.candlebe.gcoach.service.ChoiceInterestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,7 @@ import java.security.Principal;
 @Controller
 @Log4j2
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('USER')")
 public class ChoiceController {
 
     private final ChoiceInterestService choiceInterestService;

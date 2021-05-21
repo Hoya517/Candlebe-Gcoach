@@ -1,8 +1,10 @@
 package com.candlebe.gcoach.controller;
 
+import com.candlebe.gcoach.dto.MemberDTO;
 import com.candlebe.gcoach.entity.*;
 import com.candlebe.gcoach.repository.*;
 import com.candlebe.gcoach.security.dto.AuthMemberDTO;
+import com.candlebe.gcoach.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Log4j2
@@ -24,9 +25,12 @@ public class SettingController {
     private final LikeRepository likeRepository;
     private final ReplyRepository replyRepository;
     private final DiaryRepository diaryRepository;
+    private final MemberService memberService;
 
-    @GetMapping("setting")
-    public String getSetting() {
+    @GetMapping("/setting")
+    public String getSetting(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
+        MemberDTO memberDTO = memberService.authMemberDtoToMemberDto(authMemberDTO);
+        model.addAttribute("memberDTO", memberDTO);
         return "setting";
     }
 
@@ -45,6 +49,6 @@ public class SettingController {
         member.getRoleSet().clear();
         memberRepository.save(member);
         memberRepository.deleteMember(member.getMid());
-        return "redirect:/login";
+        return "redirect:/logout";
     }
 }

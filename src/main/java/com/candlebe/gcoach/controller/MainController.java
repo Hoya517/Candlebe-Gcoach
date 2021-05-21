@@ -3,7 +3,6 @@ package com.candlebe.gcoach.controller;
 import com.candlebe.gcoach.dto.InterestDTO;
 import com.candlebe.gcoach.dto.MemberDTO;
 import com.candlebe.gcoach.dto.PlayDTO;
-import com.candlebe.gcoach.dto.SearchDTO;
 import com.candlebe.gcoach.entity.Content;
 import com.candlebe.gcoach.entity.History;
 import com.candlebe.gcoach.entity.Member;
@@ -99,11 +98,13 @@ public class MainController {
 
     // 검색
     @GetMapping("/search")
-    public String search(Model model, SearchDTO dto) {
-        log.info("검색어 : " + dto.getSearch());
-        List<Content> result = contentService.findBySearch(dto.getSearch());
-        System.out.println(dto.getSearch());
-        model.addAttribute("result", result);
+    public String search(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model, String search) {
+        log.info("검색어 : " + search);
+        MemberDTO memberDTO = memberService.authMemberDtoToMemberDto(authMemberDTO);
+        model.addAttribute("memberDTO", memberDTO);
+        List<Content> contents = contentService.findBySearch(search);
+        System.out.println(search);
+        model.addAttribute("contents", contents);
         return "search";
     }
 

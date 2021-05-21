@@ -6,33 +6,67 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
     <title>G-Coach</title>
-    <script language="JavaScript">
-        function submit() {
-            with (document.searchForm) {
-                if (inputSearch.value.length == 0) {
-                    alert("검색어를 입력해 주세요!!");
-                    inputSearch.focus();
-                    return false;
-                }
-                document.searchForm.submit();
-
-            }
-        }
-    </script>
 </head>
 <body>
-<header class="play-header">
-    <div class="play-header__left">
-        <span><a href="sidebar.html"><i class="fas fa-bars fa-sm"></i></a></span>
-        <a th:href="@{/}"><img src="/images/logo.png"></a>
+<header class="main-header">
+    <div class="main-header__left">
+        <!-- span 안에 있는 a 태그 삭제하고 span에 클래스 추가 -->
+        <span class="main-header__left-icon"><i class="fas fa-bars fa-sm"></i></span>
+        <a th:href="@{/}">
+            <img th:src="@{/images/logo.png}">
+        </a>
     </div>
     <div class="main-header__right">
-        <form name="searchForm" th:action="@{/search}" th:method="get" th:object="${searchDTO}">
-            <input class="main-header__right-input" name="inputSearch" type="text" placeholder="검색어를 입력해주세요.">
-            <button class="main-header__right-icon" name="" onclick="submit();" value=""><i class="fas fa-search"></i></button>
+        <form th:action="@{/search}" th:method="get" name="searchForm">
+            <input class="main-header__right-input" name="search" type="text" placeholder="">
+            <button class="main-header__right-icon" type="submit"><i class="fas fa-search"></i></button>
         </form>
     </div>
 </header>
+<!-------------------------- 사이드 바 -------------------------->
+<!----------------------------------회원------------------------>
+<th:block>
+    <div class="sidebar" th:if="${memberDTO.checkLogin}">
+        <div class="sidebar-header">
+            <div class="user-img">
+                <img th:src="@{/images/userimage.jpg}">
+            </div>
+            <div class="user-profile">
+                <h3 class="username">[[${memberDTO.username}]]</h3>
+                <h3 class="usernickname">[[${memberDTO.nickname}]]</h3>
+            </div>
+        </div>
+        <div class="sidebar-body">
+            <div class="sidebar-list">
+                <a th:href="@{/profile_main}"><h3>프로필</h3></a>
+                <a th:href="@{diary/calendar}"><h3>다이어리</h3></a>
+                <a th:href="@{/history}"><h3>히스토리</h3></a>
+                <a th:href="@{/setting}"><h3>설정</h3></a>
+            </div>
+        </div>
+    </div>
+    <!--------------------------- 비회원 ---------------------------->
+    <div class="sidebar" th:if="${!memberDTO.checkLogin}">
+        <div class="sidebar-header">
+            <div class="nonmember">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="user-profile">
+                <h3 class="sidebar__login">로그인하세요</h3>
+            </div>
+        </div>
+        <div class="sidebar-body">
+            <div class="sidebar-list">
+                <a th:href="@{/login}">
+                    <h3>로그인</h3>
+                </a>
+                <a th:href="@{/join}">
+                    <h3>회원가입</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+</th:block>
 
 <div class="contents-play-screen">
     <div class="play-background">
@@ -90,8 +124,7 @@
     <a href="#"><p class="footer__text">청소년 보호정책</p></a>
 </footer>
 
-<script src="/jquery/jquery.min.js"></script>
-<script src="https://kit.fontawesome.com/d1dbd1f9d9.js" crossorigin="anonymous"></script>
+<script th:src="@{https://kit.fontawesome.com/d1dbd1f9d9.js}" crossorigin="anonymous"></script>
 <script th:inline="javascript">
     $(document).ready(function (e) {
         const cid = [[${dto.cid}]];
@@ -189,5 +222,7 @@
     const audioPlay = document.querySelector("#audioPlay");
     console.log(audioPlay.startDate);
 </script>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/sidebar.js}"></script>
 </body>
 </html>
