@@ -1,0 +1,6 @@
+/***추천 리스트***/
+.nav__li:last-child {
+    color: rgb(202, 202, 202);
+    font-weight: 500;
+
+}

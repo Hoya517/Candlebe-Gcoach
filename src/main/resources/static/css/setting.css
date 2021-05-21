@@ -1,0 +1,51 @@
+.serve-screen__setting {
+    margin: 0;
+    min-height: 500px;
+}
+
+.setting-list {
+    height: 48px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid;
+}
+
+.setting-list__btn {
+    font-size: 18px;
+    line-height: 48px;
+    margin-right: 18px;
+}
+
+.setting-list__text {
+    font-size: 18px;
+    line-height: 48px;
+    margin-left: 18px;
+}
+
+
+@media screen and (max-width: 420px) {
+    .serve-screen__setting {
+        min-height: 520px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .serve-screen__setting {
+        min-height: 460px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .serve-screen__setting {
+        min-height: 430px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .serve-screen__setting {
+        min-height: 365px;
+    }
+}
+
+
+

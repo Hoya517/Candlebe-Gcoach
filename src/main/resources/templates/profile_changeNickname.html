@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>닉네임 변경하기</title>
+</head>
+<body>
+    <div class="G-COACH__title-s">
+        <img th:src="@{/images/logo.png}">
+    </div>
+
+    <main class="serve-screen">
+        <div class="nickname__title">
+            <h1>변경하실 닉네임을 입력하세요.</h1>
+        </div>
+        <form th:action="@{/profile_changeNickname}" th:method="POST" name="changeNickname_form">
+            <div id="nickname_form">
+                <h3>닉네임 변경&nbsp;&nbsp;&nbsp;<span class="error_msg"></span></h3>
+                <input type="text" class="nickname" name="nickname" onkeydown="checkSpace()">
+            </div>
+            <div class="complete-button">
+                <input type="button" value="변경" onclick="changeNickname()">
+            </div>
+        </form>
+    </main>
+
+    <script src="https://kit.fontawesome.com/d1dbd1f9d9.js" crossorigin="anonymous"></script>
+    <script th:src="@{jquery/jquery.min.js}"></script>
+    <script th:inline="javascript">
+        const msg = [[${msg}]];
+        if (msg !== null && msg !== "") {
+            alert(msg);
+        }
+
+        // 스페이스 입력 제한
+        function checkSpace() {
+            const kcode = event.keyCode;
+            if (kcode === 32) event.returnValue = false;
+        }
+
+        const changeNickname_form = document.changeNickname_form;
+        const nickname = changeNickname_form.nickname;
+        const nicknameJ = /^[A-za-z가-힣]{2,8}$/;
+        let nicknameB = false;
+
+        $('.nickname').blur(function () {
+            if ($(this).val() !== "" || $(this).val().length !== 0) {
+                if (nicknameJ.test($(this).val())) {
+                    $.ajax({
+                        url: '/checkNickname',
+                        type: 'POST',
+                        data: {
+                            "nickname": $(".nickname").val()
+                        },
+                        success: function (data) {
+                            console.log(data)
+                            if (data === "fail") {
+                                console.log("nickname : false");
+                                nicknameB = false;
+                                $('.error_msg').text("이미 사용중인 닉네임입니다.").css('color', 'red');
+                            } else if (data === "success") {
+                                console.log("username : true");
+                                nicknameB = true;
+                                $('.error_msg').text("사용 가능한 닉네임입니다.").css('color', 'green');
+                            }
+                        },
+                        error: function (error) {
+                            console.log("error : " + error);
+                            nicknameB = false;
+                            alert("알수없는 이유로 닉네임을 변경할 수 없습니다. 관리자에게 문의해주세요.")
+                        }
+                    })
+                } else {
+                    console.log("nickname : false");
+                    nicknameB = false;
+                    $('.error_msg').text("올바른 형식의 닉네임을 입력해주세요.").css('color', 'red');
+                }
+            } else if ($(this).val() === "" || $(this).val().length === 0) {
+                console.log("nickname : false");
+                nicknameB = false;
+                $('.error_msg').text("닉네임을 입력해주세요.").css('color', 'red');
+            }
+        })
+
+        function changeNickname() {
+            if (nickname.value === "" || nickname.value.length === 0) {
+                nickname.focus();
+                $('.error_msg').text("닉네임을 입력해주세요.").css('color', 'red');
+            } else if (!nicknameB) {
+                nickname.focus();
+            } else if (nicknameB) {
+                changeNickname_form.submit();
+            }
+        }
+    </script>
+</body>
+</html>

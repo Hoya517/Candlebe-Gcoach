@@ -1,0 +1,19 @@
+
+.main-footer {
+    margin-top: 20px;
+    border-top: 1px solid #55576f;
+    width: 100%;
+    height: 40px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 28px;
+}
+
+.footer__text {
+    padding: 18px 0px;
+    text-align: center;
+    font-size: 8px;
+    color: #999;
+    cursor: pointer;
+}

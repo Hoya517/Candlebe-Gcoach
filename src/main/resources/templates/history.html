@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/calendar.css}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no,
+  maximum-scale=1.0, minimum-scale=1.0">
+    <title>히스토리</title>
+    <script language="JavaScript">
+        function submit() {
+            with (document.searchForm) {
+                if (inputSearch.value.length == 0) {
+                    alert("검색어를 입력해 주세요!!");
+                    inputSearch.focus();
+                    return false;
+                }
+                document.searchForm.submit();
+            }
+        }
+    </script>
+</head>
+
+<body>
+<header class="main-header">
+    <div class="main-header__left">
+        <span><a th:href="@{sidebar.html}"><i class="fas fa-bars fa-sm"></i></a></span>
+        <a href="./main.html"><img th:src="@{/images/logo.png}"></a>
+    </div>
+    <div class="main-header__right">
+        <form name="searchForm" th:action="@{/search}" th:method="get" th:object="${searchDTO}">
+            <input class="main-header__right-input" name="" type="text" placeholder="">
+            <button class="main-header__right-icon" name="" onclick="submit();" value=""><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+</header>
+
+<nav class="diary-navbar">
+    <ul class="diary-nav__ul">
+        <li class="diary-nav__li"><p class="diary-nav__p">히스토리</p></li>
+    </ul>
+</nav>
+
+<main class="serve-screen" >
+    <th:block th:each="history : ${histories}">
+        <a th:href="@{/{id}/play (id=${history.content.cid})}">
+            <div class="main-screen__container">
+                <div class="main-screen__content">
+                    <div class="main-screen__content-column">
+                        <div class="main-screen__thumbnail">
+                            <img th:src="@{'/stream/' + ${history.content.imgOriginalName}}" alt="">
+                        </div>
+                    </div>
+                    <div class="main-screen__content-column">
+                        <h5 class="main-screen__content-title" th:text="${history.content.title}">동영상제목</h5>
+                        <h6 class="main-screen__content-hashtag" th:text="${history.content.getCategory1()} + ${history.content.getCategory2()} + ${history.content.getCategory3()}"></h6>
+                        <h6 class="main-screen__content-text">[[${#temporals.format(history.regDate, 'yyyy/MM/dd hh:mm:ss')}]]</h6>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </th:block>
+</main>
+
+<footer class="main-footer">
+    <a href="#"><p class="footer__text">회사소개</p></a>
+    <a href="#"><p class="footer__text">개인정보 처리방침</p></a>
+    <a href="#"><p class="footer__text">서비스 이용약관</p></a>
+    <a href="#"><p class="footer__text">청소년 보호정책</p></a>
+</footer>
+</body>
+</html>

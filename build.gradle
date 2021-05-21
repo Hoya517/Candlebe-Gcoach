@@ -1,0 +1,50 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.4'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.candlebe'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // 소셜 로그인 적용을 위한 OAuth 라이브러리
+	implementation 'org.springframework.boot:spring-boot-starter-validation' // 유효성 겁사를 위한 라이브러리
+	implementation 'com.google.code.gson:gson:2.8.6' // json 변환 라이브러리
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'mysql:mysql-connector-java'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	// Thymeleaf 에서 스프링 시큐리티를 사용하기 위한 라이브러리
+	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5'
+	// Thymeleaf 의 날짜 관련 라이브러리
+	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time'
+	// JWT 라이브러리
+	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	compile("mysql:mysql-connector-java")
+}
+
+test {
+	useJUnitPlatform()
+}

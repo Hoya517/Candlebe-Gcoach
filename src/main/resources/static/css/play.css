@@ -1,0 +1,161 @@
+/*** 콘텐츠 플레이 ***/
+.contents-play-screen {
+    margin: 0;
+}
+
+.play-background img {
+    width: 100%;
+    height: 400px;
+    position: relative;
+}
+
+.contents-play-audio{
+    margin: 4px;
+}
+
+.contents-play-audio audio{
+    display: flex;
+    width: 100%;
+    height: 18px;
+}
+
+/*** 하단 ***/
+.play-screen__container {
+    margin-top: 16px;
+}
+
+.play-screen__header {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.play-screen__header span:first-child {
+    font-size: 18px;
+    color: #181044;
+}
+
+.play-likes {
+    color: #e50046;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+.play-likes button {
+    border: none;
+    outline: none;
+    background-color: #fff;
+    color: #e50046;
+    font-size: 16px;
+}
+
+.play-screen__comment {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.play-screen__comment input {
+    width: 84%;
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.play-screen__comment button {
+    width: 15%;
+    height: 30px;
+    margin-left: 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    background-color: #181044;
+    color: #fff;
+    cursor: pointer;
+}
+
+.play-screen__content-column {
+    cursor: pointer;
+}
+
+.play-screen__content-column:last-child{
+    margin-left: 20px;
+}
+
+.play-screen__content {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.play-screen__thumbnail {
+    position: relative;
+}
+
+.play-screen__thumbnail img {
+    height: 80px;
+}
+
+.user-comment img {
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+}
+
+.play-screen__content-title {
+    font-size: 18px;
+    color: #181044;
+    padding-bottom: 4px;
+}
+
+.play-screen__content-text {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.4);
+    padding-bottom: 2px;
+}
+
+.user-comment__nickname {
+    font-size: 16px;
+    color: #181044;
+    padding-bottom: 4px;
+}
+
+.user-comment__text {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.4);
+    padding-bottom: 2px;
+}
+
+@media screen and (max-width: 600px) {
+    .play-screen__thumbnail img {
+        width: 110px;
+        height: 60px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .play-screen__content-column:last-child{
+        margin-left: 10px;
+    }
+
+    .play-screen__header span {
+        font-size: 17px;
+    }
+
+    .play-screen__content-title {
+        font-size: 15px;
+        padding-bottom: 4px;
+    }
+    
+    .play-screen__content-text {
+        font-size: 13px;
+        color: rgba(0, 0, 0, 0.4);
+        padding-bottom: 2px;
+    }
+
+    .user-comment img {
+        width: 55px;
+        height: 55px;
+        border-radius: 15px;
+    }
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, 
+  maximum-scale=1.0, minimum-scale=1.0">
+    <title>감정 선택하기</title>
+</head>
+<body>
+<div class="G-COACH__title-s">
+    <img src="/images/logo.png">
+</div>
+
+<div class="choice__title">
+    <h1>오늘은 어떤 감정을 느끼셨나요?</h1>
+    <span>오늘의 감정을 선택해주세요.</span>
+</div>
+
+<form th:action="@{/diary/today/{year}/{month}/{date}/emotion  (year=${year}, month=${month}, date=${date})}" th:object="${emotionDTO}" method="post" id="emotion-form">
+    <div class="emotion-form__column">
+        <button type="submit" name="emotion" value="즐거움"><i class="fas fa-grin-squint fa-lg"></i><p>즐거움</p></button>
+        <button type="submit" name="emotion" value="분노"><i class="fas fa-angry fa-lg"></i><p>분노</p></button>
+    </div>
+    <div class="emotion-form__column">
+        <button type="submit" name="emotion" value="무기력"><i class="fas fa-meh-blank fa-lg"></i><p>무기력</p></button>
+        <button type="submit" name="emotion" value="불안"><i class="fas fa-grimace fa-lg"></i><p>불안</p></button>
+    </div>
+    <div class="emotion-form__column">
+        <button type="submit" name="emotion" value="슬픔"><i class="fas fa-sad-cry fa-lg"></i><p>슬픔</p></button>
+        <button type="submit" name="emotion" value="부끄러움"><i class="fas fa-grin-beam-sweat fa-lg"></i><p>부끄러움</p></button>
+    </div>
+</form>
+
+<script src="https://kit.fontawesome.com/d1dbd1f9d9.js" crossorigin="anonymous"></script>
+</body>
+</html>

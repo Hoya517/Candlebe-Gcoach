@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, 
+  maximum-scale=1.0, minimum-scale=1.0">
+    <title>다이어리</title>
+    <script language="JavaScript">
+        function submit() {
+            with (document.searchForm) {
+                if (inputSearch.value.length == 0) {
+                    alert("검색어를 입력해 주세요!!");
+                    inputSearch.focus();
+                    return false;
+                }
+                document.searchForm.submit();
+            }
+        }
+    </script>
+</head>
+<body>
+    <header class="main-header">
+        <div class="main-header__left">
+            <span><a href="sidebar.html"><i class="fas fa-bars fa-sm"></i></a></span>
+            <a href="/"><img src="/images/logo.png"></a>
+        </div>
+        <div class="main-header__right">
+            <form name="searchForm" th:action="@{/search}" th:method="get" th:object="${searchDTO}">
+                <input class="main-header__right-input" name="" type="text" placeholder="">
+                <button class="main-header__right-icon" name="" onclick="submit();" value=""><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    </header>
+
+    <nav class="diary-navbar">
+        <ul class="diary-nav__ul">
+            <li class="diary-nav__li-prev"><a href="/diary/calendar" class="prev-btn"><i class="fas fa-chevron-left fa-sm"></i></a>
+            <p class="prev-btn__text">달력으로 돌아가기</p></li>
+        </ul>
+    </nav>
+
+    <main class="serve-screen">
+    <form th:action="@{/diary/today/{year}/{month}/{date} (year=${year}, month=${month}, date=${date})}" method="post" th:object="${todayDTO}">
+        <div class="diary-today">
+            <h3 class="diary-subtitle__s">TODAY</h3>
+            <div class="diary-date" th:text="${year} + '년 ' + ${month} + '월 ' + ${date} + '일'"></div>
+        </div>
+
+        <div class="diary-container">
+            <h3 class="diary-subtitle">오늘의 감정</h3>
+<!--            이모티콘 처리-->
+            <div class="diary-choice">
+                <div th:if="${emotion=='' || emotion==null}">
+                    <button type="button" th:onclick="'location.href=\''+ @{/diary/today/{year}/{month}/{date}/emotion (year=${year}, month=${month}, date=${date})} + '\''">?</button>
+                </div>
+                <div th:if="${emotion=='즐거움'}">
+                    <button type="button" th:onclick="'location.href=\''+ @{/diary/today/{year}/{month}/{date}/emotion (year=${year}, month=${month}, date=${date})} + '\''"><i class="fas fa-grin-squint fa-lg"></i></button>
+                </div>
+                <div th:if="${emotion=='분노'}">
+                    <button type="button" th:onclick="'location.href=\''+ @{/diary/today/{year}/{month}/{date}/emotion (year=${year}, month=${month}, date=${date})} + '\''"><i class="fas fa-angry fa-lg"></i></button>
+                </div>
+                <div th:if="${emotion=='무기력'}">
+                    <button type="button" th:onclick="'location.href=\''+ @{/diary/today/{year}/{month}/{date}/emotion (year=${year}, month=${month}, date=${date})} + '\''"><i class="fas fa-meh-blank fa-lg"></i></button>
+                </div>
+                <div th:if="${emotion=='불안'}">
+                    <button type="button" th:onclick="'location.href=\''+ @{/diary/today/{year}/{month}/{date}/emotion (year=${year}, month=${month}, date=${date})} + '\''"><i class="fas fa-grimace fa-lg"></i></button>
+                </div>
+                <div th:if="${emotion=='슬플'}">
+                    <button type="button" th:onclick="'location.href=\''+ @{/diary/today/{year}/{month}/{date}/emotion (year=${year}, month=${month}, date=${date})} + '\''"><i class="fas fa-sad-cry fa-lg"></i></button>
+                </div>
+                <div th:if="${emotion=='부끄러움'}">
+                    <button type="button" th:onclick="'location.href=\''+ @{/diary/today/{year}/{month}/{date}/emotion (year=${year}, month=${month}, date=${date})} + '\''"><i class="fas fa-grin-beam-sweat fa-lg"></i></button>
+                </div>
+            </div>
+<!--            이모티콘 아래 텍스트 처리-->
+            <div th:if="${emotion!='' || emotion!=null}">
+                <h3 class="diary-hashtag" th:text="${emotion}"></h3>
+            </div>
+            <div th:if="${emotion=='' || emotion==null}">
+                <h3 class="diary-hashtag">오늘의 감정을 선택해주세요.</h3>
+            </div>
+        </div>
+
+        <div class="diary-container">
+            <h3 class="diary-subtitle">오늘의 후기</h3>
+                <input type="text" th:value="${todaysReview}" name="todaysReview" class="diary-diary" />
+                <input type="submit" value="저장">
+        </div>
+    </form>
+
+<!--        <div class="diary-container">-->
+<!--            <h3 class="diary-subtitle">오늘의 콘텐츠</h3>-->
+<!--            <div class="main-screen__content">-->
+<!--                <div class="main-screen__content-column">-->
+<!--                    <div class="main-screen__thumbnail">-->
+<!--                        <img src="/images/thumbnail_example.jpg" alt="">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="main-screen__content-column">-->
+<!--                    <h5 class="main-screen__content-title">동영상제목</h5>-->
+<!--                    <h6 class="main-screen__content-text">동영상내용입니다.</h6>-->
+<!--                    <h6 class="main-screen__content-hashtag">#해시태그 #동영상 #기초</h6>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+    </main>
+
+    <footer class="main-footer">
+        <a href="#"><p class="footer__text">회사소개</p></a>
+        <a href="#"><p class="footer__text">개인정보 처리방침</p></a>
+        <a href="#"><p class="footer__text">서비스 이용약관</p></a>
+        <a href="#"><p class="footer__text">청소년 보호정책</p></a>
+    </footer>
+</body>
+<script src="https://kit.fontawesome.com/d1dbd1f9d9.js" crossorigin="anonymous"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/today.js"></script>
+</html>

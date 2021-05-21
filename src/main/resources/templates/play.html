@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>G-Coach</title>
+    <script language="JavaScript">
+        function submit() {
+            with (document.searchForm) {
+                if (inputSearch.value.length == 0) {
+                    alert("검색어를 입력해 주세요!!");
+                    inputSearch.focus();
+                    return false;
+                }
+                document.searchForm.submit();
+
+            }
+        }
+    </script>
+</head>
+<body>
+<header class="play-header">
+    <div class="play-header__left">
+        <span><a href="sidebar.html"><i class="fas fa-bars fa-sm"></i></a></span>
+        <a th:href="@{/}"><img src="/images/logo.png"></a>
+    </div>
+    <div class="main-header__right">
+        <form name="searchForm" th:action="@{/search}" th:method="get" th:object="${searchDTO}">
+            <input class="main-header__right-input" name="inputSearch" type="text" placeholder="검색어를 입력해주세요.">
+            <button class="main-header__right-icon" name="" onclick="submit();" value=""><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+</header>
+
+<div class="contents-play-screen">
+    <div class="play-background">
+        <img th:src="@{'/stream/' + ${dto.imgOriginalName}}" alt="">
+    </div>
+    <!-- 백그라운드 변경 ????????? -->
+</div>
+
+<div class="contents-play-audio">
+    <audio class="contents-play-audio" id="audioPlay" controls autoplay>
+        <source th:src="@{'/stream/' + ${dto.contentName}}" type="audio/mp3">
+    </audio>
+</div>
+
+<main class="serve-screen">
+    <div class="play-screen__container">
+        <div class="play-screen__header">
+            <span>연관 리스트</span>
+            <span th:if="${dto.likeCheck}" class="play-likes"><i class="fas fa-heart fa-lg"></i>[[${dto.likeCount}]] Likes</span>
+            <span th:if="${!dto.likeCheck}" class="play-likes"><i class="far fa-heart fa-lg"></i>[[${dto.likeCount}]] Likes</span>
+            <!-- 좋아요 카운트 ?????????? -->
+        </div>
+        <th:block th:each="content : ${contents}">
+            <a th:href="@{/{id}/play (id=${content.cid})}">
+                <div class="play-screen__content">
+                    <div class="play-screen__content-column">
+                        <div class="play-screen__thumbnail">
+                            <img src="/images/thumbnail_example.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="play-screen__content-column">
+                        <h5 class="play-screen__content-title" th:text="${content.title}">동영상제목</h5>
+                        <h6 class="play-screen__content-text">동영상내용입니다.</h6>
+                    </div>
+                </div>
+            </a>
+        </th:block>
+    </div>
+    <div class="play-screen__container">
+        <h4>댓글</h4>
+        <div class="addReplyContainer">
+            <input type="text" class="addReply_input" name="reply">
+            <button type="button" class="addReply_btn">입력</button>
+        </div>
+        <div class="replyList">
+            <!--댓글 영역-->
+        </div>
+    </div>
+</main>
+
+<footer class="main-footer">
+    <a href="#"><p class="footer__text">회사소개</p></a>
+    <a href="#"><p class="footer__text">개인정보 처리방침</p></a>
+    <a href="#"><p class="footer__text">서비스 이용약관</p></a>
+    <a href="#"><p class="footer__text">청소년 보호정책</p></a>
+</footer>
+
+<script src="/jquery/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/d1dbd1f9d9.js" crossorigin="anonymous"></script>
+<script th:inline="javascript">
+    $(document).ready(function (e) {
+        const cid = [[${dto.cid}]];
+        const mid = [[${dto.mid}]];
+        console.log(`mid : ${mid}, cid : ${cid}`)
+        const reply = $("input[name='reply']");
+
+        // 댓글 추가 버튼 이벤트 처리
+        $(".addReply_btn").click(function () {
+            const data = {
+                mid: mid,
+                cid: cid,
+                text: reply.val()
+            }
+            console.log(data);
+
+            $.ajax({
+                url: '/reply/' + cid,
+                type: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (result) {
+                    console.log("result : " + result);
+                    getContentReply();
+                }
+            });
+        })
+        // 전체 댓글 조회
+        function getContentReply() {
+            $.getJSON(`/reply/${cid}/all`, function (arr) {
+                let str = "";
+
+                $.each(arr, function (idx, reply) {
+                    console.log(reply);
+                    str += `
+                        <a href="#">
+                            <div class="play-screen__content">
+                                <div class="play-screen__content-column">
+                                    <div class="user-comment">
+                                        <img src="/images/userimage.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="play-screen__content-column">
+                                    <h5 class="user-comment__nickname">${reply.nickname}</h5>
+                                    <h6 class="user-comment__text">${reply.text}</h6>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                })
+                $(".replyList").html(str);
+            })
+        }
+        getContentReply();
+
+        // 좋아요 클릭 이벤트 처리
+        $(".play-likes").click(function () {
+            const data = {
+                mid: mid,
+                cid: cid
+            }
+            console.log("좋아요 이벤트 처리 데이터 : " + data);
+            $.ajax({
+                url: '/like',
+                type: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (result) {
+                    console.log("result : " + result);
+                    updateLike(result);
+                }
+            })
+        })
+        // 좋아요 갱신
+        function updateLike(result) {
+            const json = JSON.parse(result)
+            console.log(json);
+            const likeCheck = json.likeCheck;
+            let str;
+            if (likeCheck) {
+                str = `
+                    <i class="fas fa-heart fa-lg"></i>${json.likeCount} Likes
+                `;
+            } else {
+                str = `
+                    <i class="far fa-heart fa-lg"></i>${json.likeCount} Likes
+                `;
+            }
+            $(".play-likes").html(str);
+        }
+    })
+
+    const audioPlay = document.querySelector("#audioPlay");
+    console.log(audioPlay.startDate);
+</script>
+</body>
+</html>

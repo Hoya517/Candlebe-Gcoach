@@ -1,0 +1,131 @@
+.choice__title {
+  width: 100%;
+}
+  
+.choice__title h1 {
+  margin-top: 0px;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 27px;
+  text-align: center;
+  color: #172853;
+}
+
+.choice__title span {
+  display: block;
+  align-items: center;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
+  padding-bottom: 64px;
+}
+
+/***list***/
+.list-form__column {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 32px;
+}
+
+.list-form__column button {
+  border-radius: 10px;
+  background-color: #55576f;
+  color: #fff;
+  width: 33.3333%;
+  height: 64px;
+  margin-right: 20px;
+  cursor: pointer;
+  border: none;
+}
+
+.list-form__column button:last-child {
+  margin-right: 0px;
+}
+
+.list-form__column button:hover {
+  background-color: #ffd95e;
+  color: #172853;
+  font-weight: bold;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.list-form__column button:checked {
+  background-color: #ffd95e;
+  color: #172853;
+  font-weight: bold;
+}
+
+/***emotion***/
+.emotion-form__column {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 50px;
+  padding-bottom: 32px;
+}
+
+.emotion-form__column button:hover {
+  background-color: #ffd95e;
+  color: #172853;
+  font-weight: bold;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.emotion-form__column button {
+  border-radius: 10px;
+  background-color: #55576f;
+  color: #fff;
+  width: 50%;
+  min-width: 60px;
+  height: 100px;
+  cursor: pointer;
+  border: none;
+  margin: 0px 15px;
+}
+
+.emotion-form__column i {
+  font-size: 34px;
+}
+
+.emotion-form__column p {
+  padding-top: 8px;
+  font-size: 14px;
+}
+
+/***button***/
+#next-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+#next-button input[type="submit"] {
+  margin: 15px 0;
+  background-color: #172853;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  width: 40%;
+  height: 45px;
+  font-size: 18px;
+}
+
+#change-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+#change-button input[type="submit"] {
+  margin: 15px 0;
+  background-color: #172853;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  width: 40%;
+  height: 45px;
+  font-size: 18px;
+}

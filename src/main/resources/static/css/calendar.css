@@ -1,0 +1,128 @@
+.calendar {
+    width: 100%;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+  
+.header-month {
+    font-size: 30px;
+}
+  
+.nav {
+    display: flex;
+    border: 1px solid #333333;
+    border-radius: 3px;
+}
+  
+.nav-btn {
+    width: 28px;
+    height: 30px;
+    border: none;
+    font-size: 16px;
+    line-height: 30px;
+    background-color: #fff;
+    cursor: pointer;
+}
+  
+.today-btn {
+    width: 75px;
+    border-left: 1px solid #333333;
+    border-right: 1px solid #333333;
+}
+
+.days {
+    display: flex;
+}
+  
+.day {
+    width: calc(100% / 7);
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 18px;
+}
+  
+.dates {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap;
+    height: 500px;
+}
+
+  
+.date {
+    width: calc(90% / 7);
+    z-index: 50;
+    padding-right: 7px;
+    padding-top: 2px;
+    text-align: center;
+}
+
+.date:hover {
+    background-color: #e4f0fd;
+}
+
+.day:nth-child(7n + 1),
+.date:nth-child(7n + 1) {
+  color: #D13E3E;
+}
+
+.day:nth-child(7n),
+.date:nth-child(7n) {
+  color: #396EE2;
+}
+
+.rest {
+    opacity: 0.3;
+}
+
+.today {
+    position: relative;
+    color: #FFFFFF;
+}
+  
+.today::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    display: block;
+    width: 25px;
+    height: 25px;
+    background-color: #676983;
+    border-radius: 50%;
+    transform: translate(-50%, -42%);
+    content: '';
+}
+
+@media screen and (max-width: 500px) {
+    .dates {
+        height: 400px;
+    }
+
+    .date {
+        width: calc(80% / 7);
+    } 
+
+    .header-month {
+        font-size: 22px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .dates {
+        height: 320px;
+        font-size: 12px;
+    }
+    .date {
+        width: calc(80% / 7);
+    } 
+
+    .header-month {
+        font-size: 22px;
+    }
+}

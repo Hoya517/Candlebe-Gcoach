@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/components/header_category/main_category.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, 
+  maximum-scale=1.0, minimum-scale=1.0">
+    <title>G-Coach</title>
+    <script language="JavaScript">
+        function submit() {
+            with (document.searchForm) {
+                if (inputSearch.value.length == 0) {
+                    alert("검색어를 입력해 주세요!!");
+                    inputSearch.focus();
+                    return false;
+                }
+                document.searchForm.submit();
+
+            }
+        }
+    </script>
+</head>
+<body>
+    <header class="main-header">
+        <div class="main-header__left">
+            <span><a href="sidebar.html"><i class="fas fa-bars fa-sm"></i></a></span>
+            <img src="/images/logo.png">
+        </div>
+
+        <div class="main-header__right">
+            <form th:action="@{/search}" th:method="get" th:object="${searchDTO}">
+                <input class="main-header__right-input" name="search" type="text" placeholder="검색어를 입력해주세요.">
+                <button class="main-header__right-icon" name="" onclick="submit();" value=""><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <ul class="nav__ul">
+            <li class="nav__li"><a class="nav__a" th:href="@{/}"><p>호흡훈련</p></i></a></li>
+            <li class="nav__li"><a class="nav__a" th:href="@{/meditation}"><p>명상</p></i></a></li>
+            <li class="nav__li"><a class="nav__a" th:href="@{/recommend}"><p>추천 콘텐츠</p></i></a></li>
+            <li class="nav__li"><a class="nav__a" th:href="@{/category}"><p>카테고리</p></i></a></li>
+        </ul>
+    </nav>
+
+    <main class="serve-screen">
+        <div class="serve-screen__category">
+        <form th:action="@{/category/interest}" th:object="${interestDTO}" method="GET" id="list-form">
+            <div class="list-form__column">
+                <button type="submit" name="interest" value="명상">명상</button>
+                <button type="submit" name="interest" value="힐링">힐링</button>
+                <button type="submit" name="interest" value="행복">행복</button>
+            </div>
+
+            <div class="list-form__column">
+                <button type="submit" name="interest" value="숙면">숙면</button>
+                <button type="submit" name="interest" value="관계증진">관계증진</button>
+                <button type="submit" name="interest" value="집중력">집중력</button>
+            </div>
+
+            <div class="list-form__column">
+                <button type="submit" name="interest" value="자기이해">자기이해</button>
+                <button type="submit" name="interest" value="긍정">긍정</button>
+                <button type="submit" name="interest" value="건강">건강</button>
+            </div>
+
+            <div class="list-form__column">
+                <button type="submit" name="interest" value="자존감">자존감</button>
+                <button type="submit" name="interest" value="스트레스">스트레스</button>
+                <button type="submit" name="interest" value="운동">운동</button>
+            </div>
+        </form>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <a href="#"><p class="footer__text">회사소개</p></a>
+        <a href="#"><p class="footer__text">개인정보 처리방침</p></a>
+        <a href="#"><p class="footer__text">서비스 이용약관</p></a>
+        <a href="#"><p class="footer__text">청소년 보호정책</p></a>
+    </footer>
+
+</body>
+<script src="https://kit.fontawesome.com/d1dbd1f9d9.js" crossorigin="anonymous"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/toggle.js"></script>
+</html>
