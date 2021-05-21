@@ -45,6 +45,7 @@ public class Member extends BaseEntity {
     private Set<MemberRole> roleSet = new HashSet<>(); // 권한
 
     @OneToMany(mappedBy = "member")
+    @Builder.Default
     private List<Diary> diaryList = new ArrayList<>();
 
     public void addMemberRole(MemberRole memberRole) {
