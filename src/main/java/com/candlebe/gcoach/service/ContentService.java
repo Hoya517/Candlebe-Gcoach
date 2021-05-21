@@ -34,7 +34,7 @@ public class ContentService {
     }
 
     // 콘텐츠 파일 저장
-    public Content save(MultipartFile file, MultipartFile img,ContentUploadDTO dto) {
+    public Content save(MultipartFile file, MultipartFile img, ContentUploadDTO dto) {
         try {
             // file == mp3
             // img 추가
@@ -74,6 +74,7 @@ public class ContentService {
                     dto.getCategory2(),
                     dto.getCategory3(),
                     dto.getTitle(),
+                    dto.getContent(),
                     filePath.toString(),
                     file.getOriginalFilename(),
                     imgPath.toString(),

@@ -8,6 +8,7 @@ import lombok.Setter;
 public class ContentUploadDTO {
 
     private String title;
+    private String content;
 
     private String category1;
     private String category2;

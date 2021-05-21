@@ -65,8 +65,12 @@
                 </div>
                 <div class="main-screen__content-column">
                     <h5 class="main-screen__content-title" th:text="${result.title}">동영상제목</h5>
-                    <h6 class="main-screen__content-text">동영상내용입니다.</h6>
-                    <h6 class="main-screen__content-hashtag">#해시태그 #동영상 #기초</h6>
+                    <h6 class="main-screen__content-text" th:text="${result.getContent()}"></h6>
+                    <h6 class="main-screen__content-hashtag">
+                        <span th:if="${(result.getCategory1()!=null) && (result.getCategory1()!='')}" th:text="'#'+${result.getCategory1()}+' '"></span>
+                        <span th:if="${(result.getCategory2()!=null) && (result.getCategory2()!='')}" th:text="'#'+${result.getCategory2()}+' '"></span>
+                        <span th:if="${(result.getCategory3()!=null) && (result.getCategory3()!='')}" th:text="'#'+${result.getCategory3()}+' '"></span>
+                    </h6>
                 </div>
             </div></a>
             </div>

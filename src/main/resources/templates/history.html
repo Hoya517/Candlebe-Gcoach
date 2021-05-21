@@ -56,7 +56,12 @@
                     </div>
                     <div class="main-screen__content-column">
                         <h5 class="main-screen__content-title" th:text="${history.content.title}">동영상제목</h5>
-                        <h6 class="main-screen__content-hashtag" th:text="${history.content.getCategory1()} + ${history.content.getCategory2()} + ${history.content.getCategory3()}"></h6>
+                        <h6 class="main-screen__content-text" th:text="${history.content.content}"></h6>
+                        <h6 class="main-screen__content-hashtag">
+                            <span th:if="${(history.content.getCategory1()!=null) && (history.content.getCategory1()!='')}" th:text="'#'+${history.content.getCategory1()}+' '"></span>
+                            <span th:if="${(history.content.getCategory2()!=null) && (history.content.getCategory2()!='')}" th:text="'#'+${history.content.getCategory2()}+' '"></span>
+                            <span th:if="${(history.content.getCategory3()!=null) && (history.content.getCategory3()!='')}" th:text="'#'+${history.content.getCategory3()}+' '"></span>
+                        </h6>
                         <h6 class="main-screen__content-text">[[${#temporals.format(history.regDate, 'yyyy/MM/dd hh:mm:ss')}]]</h6>
                     </div>
                 </div>

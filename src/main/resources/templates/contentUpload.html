@@ -9,6 +9,7 @@
     <form method="POST" enctype="multipart/form-data" th:object="${contentUploadDTO}" action="/uploadForm">
         <table>
             <tr><td>제목</td><td><input type="text" name="title"></td></tr>
+            <tr><td>내용</td><td><input type="text" name="content"></td></tr>
             <tr><td>카테고리1</td><td><select name="category1">
                 <option value="">없음</option>
                 <option value="호흡">호흡</option>
