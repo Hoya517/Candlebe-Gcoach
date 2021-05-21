@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <link rel="stylesheet" th:href="@{css/calendar.css}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no,
+  maximum-scale=1.0, minimum-scale=1.0">
+    <title>설정</title>
+</head>
+
+<body>
+<header class="main-header">
+    <div class="main-header__left">
+        <span><a href="sidebar.html"><i class="fas fa-bars fa-sm"></i></a></span>
+        <a th:href="@{/}">
+            <img th:src="@{/images/logo.png}">
+        </a>
+    </div>
+    <div class="main-header__right">
+        <form action="#">
+            <input class="main-header__right-input" name="" type="text" placeholder="">
+            <input class="main-header__right-icon" name="" type="submit" value=""><i class="fas fa-search"></i></input>
+        </form>
+    </div>
+</header>
+
+<nav class="diary-navbar">
+    <ul class="diary-nav__ul">
+        <li class="diary-nav__li"><p class="diary-nav__p">설정</p></li>
+    </ul>
+</nav>
+
+<main class="serve-screen__setting">
+    <div class="setting-list">
+        <p class="setting-list__text">탈퇴하기</p>
+        <a th:href="@{/deleteAccount}" class="setting-list__btn"><i class="fas fa-chevron-right fa-sm"></i></a>
+    </div>
+
+</main>
+
+<footer class="main-footer">
+    <a href="#"><p class="footer__text">회사소개</p></a>
+    <a href="#"><p class="footer__text">개인정보 처리방침</p></a>
+    <a href="#"><p class="footer__text">서비스 이용약관</p></a>
+    <a href="#"><p class="footer__text">청소년 보호정책</p></a>
+</footer>
+<script th:src="@{https://kit.fontawesome.com/d1dbd1f9d9.js}" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -4,7 +4,9 @@ import com.candlebe.gcoach.entity.Content;
 import com.candlebe.gcoach.entity.Likes;
 import com.candlebe.gcoach.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,4 +22,9 @@ public interface LikeRepository extends JpaRepository<Likes, Long> {
     // 좋아요 개수
     @Query("SELECT COUNT(l) FROM Likes l WHERE l.content = :content")
     int likeCount(Content content);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Likes l WHERE l.member = :member")
+    void deleteLikes(Member member);
 }

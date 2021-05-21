@@ -1,50 +1,56 @@
 <!DOCTYPE html>
-<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOG-IN</title>
 </head>
 <body>
-    <div class="G-COACH__title">
-        <img src="/images/logo.png">
+<div class="G-COACH__title">
+    <a th:href="@{/}">
+        <img th:src="@{/images/logo.png}">
+    </a>
+</div>
+
+<main class="serve-screen">
+    <div class="login-form__title">
+        <h1>로그인</h1>
     </div>
 
-    <main class="serve-screen">
-        <div class="login-form__title">
-            <h1>로그인</h1>
-        </div>
+    <form th:action="@{/login}" th:method="POST" id="login-form">
+        <span>아이디</span>
+        <input name="username" type="text" />
+        <span>비밀번호</span>
+        <input name="password" type="password" />
+        <label><input type="checkbox" name="auto-login">로그인상태유지</label>
+        <input type="submit" value="로그인" />
 
-        <form th:action="@{/login}" th:method="POST" id="login-form">
-            <span>아이디</span>
-            <input name="username" type="text" placeholder="abc@gmail.com" />
-            <span>비밀번호</span>
-            <input name="password" type="password" placeholder="영문, 숫자, 특수문자"/>
-            <label><input type="checkbox" name="auto-login"> 로그인상태유지</label>
-            <input type="submit" value="로그인" />
-
-            <!-- 구글 로그인 -->
-            <a href="/oauth2/authorization/google">
-                <img src="/images/btn_google_signin_light_normal_web.png" alt="" class="google-button">
+        <!-- 구글 로그인 -->
+        <div class="googlebtn">
+            <a class="oauth-container btn darken-4 white black-text" th:href="@{/oauth2/authorization/google}">
+                <div class="inside">
+                    <img alt="Google sign-in"
+                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                    <span>Login with Google</span>
+                </div>
             </a>
-
-            <a href="find_pw.html">비밀번호를 잊으셨나요?</a>
-        </form>
-
-        <div id="join-form">
-            <a th:href="@{/join}">회원으로 가입하시겠어요?</a>
         </div>
-    </main>
+    </form>
 
-    <script src="https://kit.fontawesome.com/d1dbd1f9d9.js" crossorigin="anonymous"></script>
-    <script src="jquery/jquery.min.js"></script>
-    <script th:inline="javascript">
-        const msg = [[${msg}]];
-        if (msg !== null && msg !== "") {
-            alert(msg);
-        }
-    </script>
+    <div class="join-form">
+        <a th:href="@{/join}">회원으로 가입하시겠어요?</a>
+    </div>
+</main>
+
+<script th:src="@{https://kit.fontawesome.com/d1dbd1f9d9.js}" crossorigin="anonymous"></script>
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:inline="javascript">
+    const msg = [[${msg}]];
+    if (msg !== null && msg !== "") {
+        alert(msg);
+    }
+</script>
 </body>
 </html>

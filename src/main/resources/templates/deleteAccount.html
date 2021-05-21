@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <title>계정 삭제</title>
+</head>
+<body>
+<div class="G-COACH__title-s">
+    <a th:href="@{/}">
+        <img th:src="@{/images/logo.png}">
+    </a>
+</div>
+
+<main class="serve-screen">
+    <div class="nickname__title">
+        <h1>G-coach 계정을 삭제하시겠습니까?</h1>
+    </div>
+    <div class="delete-account__text">
+        <h3>계정 삭제 시 주의사항</h3>
+        <p>삭제된 계정은 다시 복구할 수 없으며 계정의 활동 정보는 완전히 삭제됩니다.</p>
+    </div>
+    <form class="delete-account__button" th:action="@{/deleteAccount}" th:method="POST" name="deleteAccount_form">
+        <div class="delete-button__container">
+            <input type="button" value="돌아가기" onclick="location.href='/setting'">
+        </div>
+        <div class="delete-button__container">
+            <input type="button" value="삭제하기" class="showModalBtn">
+        </div>
+    </form>
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">계정 삭제를 진행하시겠습니까?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <h5 style="color: red">이 작업은 취소할 수 없습니다.</h5> <br>
+                    <div class="form-group">
+                        <label for="confirmText">확인을 위해 <span style="color: red">삭제하겠습니다</span>를 입력해주세요.</label>
+                        <input type="text" class="form-control" id="confirmText" name="confirmText" onkeydown="checkSpace()">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger deleteBtn" id="deleteBtn" style="opacity: 0.5">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{https://kit.fontawesome.com/d1dbd1f9d9.js}" crossorigin="anonymous"></script>
+<script th:src="@{vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script>
+    // 스페이스 입력 제한
+    function checkSpace() {
+        const kcode = event.keyCode;
+        if (kcode === 32) event.returnValue = false;
+    }
+
+    const deleteAccount_form = document.deleteAccount_form;
+    const modal = $(".modal");
+    const confirmText = $("input[name='confirmText']");
+
+    $(".showModalBtn").click(function () {
+        confirmText.val("");
+        modal.modal("show");
+    });
+
+    let check = false;
+    confirmText.blur(function (){
+        if (confirmText.val() !== "" && confirmText.val() === "삭제하겠습니다") {
+            document.getElementById("deleteBtn").style.opacity = "1";
+            check = true;
+        } else {
+            document.getElementById("deleteBtn").style.opacity = "0.5";
+            check = false;
+        }
+    })
+
+    $(".deleteBtn").click(function () {
+        if (check) {
+            const result = confirm("정말로 삭제하시겠습니까?");
+            if (result) deleteAccount_form.submit();
+        }
+    })
+</script>
+</body>
+</html>

@@ -4,7 +4,9 @@ package com.candlebe.gcoach.repository;
 import com.candlebe.gcoach.entity.Diary;
 import com.candlebe.gcoach.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,4 +16,9 @@ public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
     @Query("SELECT d FROM Diary d WHERE d.member = :member")
     List<Diary> findByMember(Member member);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Diary d WHERE d.member = :member")
+    void deleteDiaries(Member member);
 }

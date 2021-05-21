@@ -4,6 +4,7 @@ import com.candlebe.gcoach.dto.MemberDTO;
 import com.candlebe.gcoach.entity.Member;
 import com.candlebe.gcoach.repository.MemberRepository;
 import com.candlebe.gcoach.security.dto.AuthMemberDTO;
+import com.candlebe.gcoach.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,17 +32,18 @@ public class ProfileController {
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
-/* 프로필 메인 페이지 */
+    /* 프로필 메인 페이지 */
     @GetMapping("/profile_main")
     public void getProfile(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, Model model) {
         log.info("getProfile_main..........");
-        MemberDTO memberDTO = authMemberDtoToMemberDto(authMemberDTO);
+        MemberDTO memberDTO = memberService.authMemberDtoToMemberDto(authMemberDTO);
         model.addAttribute("memberDTO", memberDTO);
     }
-/* ***** */
+    /* ***** */
 
-/* 닉네임 변경 페이지 */
+    /* 닉네임 변경 페이지 */
     @GetMapping("/profile_changeNickname")
     public void getChangeNickname() {
         log.info("getProfile_changeNickname..........");
@@ -76,12 +78,12 @@ public class ProfileController {
             MemberDTO memberDTO2 = entityToDto(member);
             model.addAttribute("msg", "닉네임 변경이 완료되었습니다.");
             model.addAttribute("memberDTO", memberDTO2);
-            return "/profile_main";
+            return "profile_main";
         }
     }
-/* ***** */
+    /* ***** */
 
-/* 비밀번호 변경 페이지 */
+    /* 비밀번호 변경 페이지 */
     @GetMapping("/profile_changePassword")
     public void getChangePassword() {
         log.info("getProfile_changePassword..........");
@@ -115,7 +117,7 @@ public class ProfileController {
             MemberDTO memberDTO2 = entityToDto(member);
             model.addAttribute("msg", "비밀번호 변경이 완료되었습니다.");
             model.addAttribute("memberDTO", memberDTO2);
-            return "/profile_main";
+            return "profile_main";
         }
     }
 
@@ -129,9 +131,9 @@ public class ProfileController {
         log.info("---------------------------------");
         return checkPassword;
     }
-/* ***** */
+    /* ***** */
 
-/* 관심사 변경 페이지 */
+    /* 관심사 변경 페이지 */
     @GetMapping("/profile_changeInterest")
     public void getChangeInterest() {
         log.info("getChangeInterest..........");
@@ -149,11 +151,11 @@ public class ProfileController {
         MemberDTO memberDTO = entityToDto(member);
         model.addAttribute("msg", "관심사 변경이 완료되었습니다.");
         model.addAttribute("memberDTO", memberDTO);
-        return "/profile_main";
+        return "profile_main";
     }
-/* ***** */
+    /* ***** */
 
-/* 감정 변경 페이지 */
+    /* 감정 변경 페이지 */
     @GetMapping("/profile_changeEmotion")
     public void getChangeEmotion() {
         log.info("getChangeEmotion..........");
@@ -171,26 +173,9 @@ public class ProfileController {
         MemberDTO memberDTO = entityToDto(member);
         model.addAttribute("msg", "감정 변경이 완료되었습니다.");
         model.addAttribute("memberDTO", memberDTO);
-        return "/profile_main";
+        return "profile_main";
     }
-/* ***** */
-
-
-    private MemberDTO authMemberDtoToMemberDto(@AuthenticationPrincipal AuthMemberDTO authMemberDTO) {
-        Member member = memberRepository.findByUsername(authMemberDTO.getUsername(), authMemberDTO.isFormSocial()).orElseThrow();
-        return MemberDTO.builder()
-                .username(member.getUsername())
-                .password(member.getPassword())
-                .nickname(member.getNickname())
-                .name(member.getName())
-                .phone(member.getPhone())
-                .formSocial(member.isFormSocial())
-                .socialType(member.getSocialType())
-                .interest(member.getInterest())
-                .emotion(member.getEmotion())
-                .build();
-    }
-
+    /* ***** */
     private MemberDTO entityToDto(Member member) {
         return MemberDTO.builder()
                 .username(member.getUsername())

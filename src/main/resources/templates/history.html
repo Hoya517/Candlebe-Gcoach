@@ -26,7 +26,9 @@
 <header class="main-header">
     <div class="main-header__left">
         <span><a th:href="@{sidebar.html}"><i class="fas fa-bars fa-sm"></i></a></span>
-        <a href="./main.html"><img th:src="@{/images/logo.png}"></a>
+        <a th:href="@{/}">
+            <img th:src="@{/images/logo.png}">
+        </a>
     </div>
     <div class="main-header__right">
         <form name="searchForm" th:action="@{/search}" th:method="get" th:object="${searchDTO}">

@@ -1,10 +1,7 @@
 package com.candlebe.gcoach.dto;
 
 import lombok.*;
-
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 @Data
 @ToString
@@ -48,4 +45,6 @@ public class MemberDTO{
     private String emotion; // 감정
 
     private String interest; // 관심사
+
+    private boolean checkLogin;
 }
