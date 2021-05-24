@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <link
+      rel="stylesheet"
+      th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" th:href="@{css/content.css}" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>콘텐츠 관리 페이지</title>
+    <style>
+      .contents-page h1 {
+        color: #ffffff;
+        opacity: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <a href="/admin_member.html"><img th:src="@{/images/logo_white.png}" /></a>
+      <a href="./admin_member.html" class="member-page">
+        <h1>회원 관리</h1>
+      </a>
+      <a th:href="@{/admin/contents}" class="contents-page">
+        <h1>콘텐츠 관리</h1>
+      </a>
+      <a th:href="@{/admin/contents/upload}" class="upload-page">
+        <h1>콘텐츠 업로드</h1>
+      </a>
+    </header>
+    <h1 class="form-title">콘텐츠 관리</h1>
+    <!--
+    <h1 class="form-title">G-COACH에 콘텐츠가 성공적으로 업로드 되었습니다!</h1>
+    -->
+    <form action="" id="contentForm">
+      <table class="table table-sm">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" class="th1">순서</th>
+            <th scope="col" class="th2">업로드일</th>
+            <th scope="col" class="th3">수정일</th>
+            <th scope="col" class="th4">제목</th>
+            <th scope="col" class="th5">내용</th>
+            <th scope="col" class="th6">카테고리1</th>
+            <th scope="col" class="th7">카테고리2</th>
+            <th scope="col" class="th8">카테고리3</th>
+            <th scope="col" class="th9">이미지 이름</th>
+            <th scope="col" class="th10">이미지 경로</th>
+            <th scope="col" class="th11">영상제목</th>
+            <th scope="col" class="th12">관리</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>2021.05.23 10:52:30.594929</td>
+            <td>2021.05.24 10:52:30.594929</td>
+            <td>즐거운 명상 시간</td>
+            <td>명상에 참여합시다</td>
+            <td>행복</td>
+            <td>슬픔</td>
+            <td>화남</td>
+            <td>user.png</td>
+            <td>C:\Users\sangJunPark\Pictures\Saved Pictures</td>
+            <td>user.mp3</td>
+            <td><a href="#">삭제</a></td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>2021.05.24</td>
+            <td>2021.05.24</td>
+            <td>즐거운 명상 시간</td>
+            <td>명상에 참여합시다</td>
+            <td>행복</td>
+            <td>슬픔</td>
+            <td>화남</td>
+            <td>user.png</td>
+            <td>C:\Users\sangJunPark\Pictures\Saved Pictures</td>
+            <td>user.mp3</td>
+            <td><a href="#">삭제</a></td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>2021.05.24</td>
+            <td>2021.05.24</td>
+            <td>즐거운 명상 시간</td>
+            <td>명상에 참여합시다</td>
+            <td>행복</td>
+            <td>슬픔</td>
+            <td>화남</td>
+            <td>user.png</td>
+            <td>C:\Users\sangJunPark\Pictures\Saved Pictures</td>
+            <td>user.mp3</td>
+            <td><a href="#">삭제</a></td>
+          </tr>
+          <tr>
+            <th scope="row">4</th>
+            <td>2021.05.24</td>
+            <td>2021.05.24</td>
+            <td>즐거운 명상 시간</td>
+            <td>명상에 참여합시다</td>
+            <td>행복</td>
+            <td>슬픔</td>
+            <td>화남</td>
+            <td>user.png</td>
+            <td>C:\Users\sangJunPark\Pictures\Saved Pictures</td>
+            <td>user.mp3</td>
+            <td><a href="#">삭제</a></td>
+          </tr>
+          <tr>
+            <th scope="row">4</th>
+            <td>2021.05.24</td>
+            <td>2021.05.24</td>
+            <td>즐거운 명상 시간</td>
+            <td>명상에 참여합시다</td>
+            <td>행복</td>
+            <td>슬픔</td>
+            <td>화남</td>
+            <td>user.png</td>
+            <td>C:\Users\sangJunPark\Pictures\Saved Pictures</td>
+            <td>user.mp3</td>
+            <td><a href="#">삭제</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </body>
+  <script>
+    const reader = new FileReader();
+
+    document
+      .querySelector("#file-picker")
+      .addEventListener("change", (changeEvent) => {
+        const mp3File = changeEvent.target.files[0];
+        reader.readAsDataURL(mp3File);
+
+        const fileName = document.getElementById("file-route");
+        fileName.value = mp3File.name;
+      });
+
+    const reader2 = new FileReader();
+
+    document
+      .querySelector("#img-picker")
+      .addEventListener("change", (changeEvent) => {
+        const imgFile = changeEvent.target.files[0];
+        reader2.readAsDataURL(imgFile);
+
+        const fileName = document.getElementById("img-route");
+        fileName.value = imgFile.name;
+      });
+  </script>
+</html>

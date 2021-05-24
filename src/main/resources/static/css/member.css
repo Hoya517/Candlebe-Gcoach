@@ -1,0 +1,130 @@
+* {
+  margin: 0;
+  text-decoration: none;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  background-color: #172853;
+  height: 62px;
+  align-items: center;
+}
+
+header img {
+  width: 174px;
+  height: 30px;
+  margin-left: 50px;
+  margin-right: 10px;
+}
+
+header h1 {
+  color: #ffffff;
+  opacity: 0.6;
+  font-weight: 500;
+  margin: 0 10px;
+  font-size: 22px;
+}
+
+header h1:hover {
+  opacity: 0.9;
+}
+
+.form-title {
+  margin-top: 20px;
+  margin-left: 50px;
+  margin-bottom: 10px;
+  font-size: 32px;
+  color: #172853;
+  font-weight: 600;
+}
+
+#memberForm {
+  margin-top: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.thead-dark {
+  background-color: #172853;
+}
+
+th,
+td {
+  text-align: center;
+}
+
+tr td a {
+  color: #000000;
+  text-decoration: none;
+}
+
+tr td a:hover {
+  text-decoration: none;
+}
+
+tr td .img-path {
+  text-overflow: ellipsis;
+}
+
+thead tr th {
+  font-size: 12px;
+}
+
+tbody tr th,
+tbody tr td {
+  font-size: 12px;
+}
+
+.th1 {
+  width: 3%;
+}
+.th2 {
+  width: 13%;
+}
+.th3 {
+  width: 5%;
+}
+.th4 {
+  width: 5%;
+}
+.th5 {
+  width: 5%;
+}
+.th6 {
+  width: 5%;
+}
+.th7 {
+  width: 5%;
+}
+.th8 {
+  width: 10%;
+}
+.th9 {
+  width: 8%;
+}
+.th10 {
+  width: 5%;
+}
+
+/*
+input 태그 style 
+
+td input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: #ffffff;
+}
+
+td input:hover {
+  background-color: #ededed;
+} 
+*/
