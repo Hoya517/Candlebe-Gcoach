@@ -25,28 +25,6 @@ public class ContentController {
 
     private final ContentService contentService;
 
-    @GetMapping("/uploadForm")
-    public String listUploadedFiles(Model model) throws IOException {
-
-        model.addAttribute("contentUploadDTO", new ContentUploadDTO());
-
-        return "contentUpload";
-    }
-
-    //Upload
-    @PostMapping("/uploadForm")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file,
-                                   @RequestParam("img") MultipartFile img,
-                                   RedirectAttributes redirectAttributes,
-                                   ContentUploadDTO dto) {
-
-        contentService.save(file, img, dto);
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
-
-        return "redirect:/uploadForm";
-    }
-
     @GetMapping(value = "/stream/{contentName}")
     public String stream(
             @PathVariable("contentName")String contentName,

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
   <head>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" th:href="@{css/style.css}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no,
@@ -48,7 +48,7 @@
       </form>
     </main>
     <script th:src="@{https://kit.fontawesome.com/d1dbd1f9d9.js}" crossorigin="anonymous"></script>
-    <script th:src="@{jquery/jquery.min.js}"></script>
+    <script th:src="@{/jquery/jquery.min.js}"></script>
     <script th:inline="javascript">
       // 회원가입시 오류 메시지
       const msg = [[${msg}]];

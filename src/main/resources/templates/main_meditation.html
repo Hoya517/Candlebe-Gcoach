@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="kr" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/components/header_category/main_meditation.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/components/header_category/main_meditation.css}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, 
@@ -41,7 +41,7 @@
         <div class="sidebar-body">
             <div class="sidebar-list">
                 <a th:href="@{/profile_main}"><h3>프로필</h3></a>
-                <a th:href="@{diary/calendar}"><h3>다이어리</h3></a>
+                <a th:href="@{/diary/calendar}"><h3>다이어리</h3></a>
                 <a th:href="@{/history}"><h3>히스토리</h3></a>
                 <a th:href="@{/setting}"><h3>설정</h3></a>
             </div>

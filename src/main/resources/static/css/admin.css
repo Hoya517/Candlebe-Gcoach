@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    text-decoration: none;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+:focus {
+    outline: none;
+}
+
+:focus-visible {
+    outline: none;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    background-color: #172853;
+    height: 62px;
+    align-items: center;
+}
+
+header img {
+  width: 174px;
+  height: 30px;
+  margin-left: 50px;
+  margin-right: 10px;
+}
+
+header h1 {
+    color: #ffffff;
+    opacity: 0.6;
+    font-weight: 500;
+    margin: 0 10px;
+    font-size: 22px;
+}
+
+header h1:hover {
+    opacity: 0.9;
+}
+
+.form-title {
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-bottom: 10px;
+    font-size: 32px;
+    color: #172853;
+}
+
+#uploadform {
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+.form-table {
+    border: none;
+}
+
+.table-left {
+    background-color: #55576f;
+    width: 180px;
+    height: 36px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.table-right {
+    width:800px;
+    height: 36px;
+    padding: 0px;
+    margin: 0px;
+    align-items: center;
+}
+
+.table-bottom {
+    width: 975px;
+    height: 36px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.table-left p {
+    text-align: center;
+    color: #ffffff;
+    font-weight: thin;
+    font-size: 16px;
+}
+
+.input__text {
+    width: 798px;
+    height: 36px;
+}
+
+.table-right__select {
+    width: 806px;
+    height: 36px;
+    padding: 0px;
+    margin: 0px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-right__select select {
+    width: calc(100%/3);
+    height: 36px;
+}
+
+.table-right__select select:nth-child(2) {
+    margin: 0 2px;
+}
+
+.table-right__upload {
+    display: flex;
+    flex-direction: row;
+}
+
+.table-right__upload label {
+    width: 118px;
+    text-align: center;
+    align-items: center;
+    line-height: 36px;
+    border: solid 1px #6c6c6c;
+    font-size: 18px;
+    color: rgb(88, 87, 87);
+    background-color: #d6d6d6;
+}
+
+#file-picker {
+    position:absolute;
+    clip:rect(0, 0, 0, 0);
+}
+
+#file-route {
+    width: 680px;
+    height: 36px;
+    border: solid 1px #6c6c6c;
+    border-right: none;
+    background-color: #ededed;
+}
+
+#img-picker {
+    position:absolute;
+    clip:rect(0, 0, 0, 0);
+}
+
+#img-route {
+    width: 680px;
+    height: 36px;
+    border: solid 1px #6c6c6c;
+    border-right: none;
+    background-color: #ededed;
+}
+
+#upload {
+    width: 988px;
+    height: 36px;
+    background-color: #55576f;
+    color: #ffffff;
+    border: none;
+    font-size: 18px;
+}
+
+#upload:hover {
+    background-color: #7e819b;
+}

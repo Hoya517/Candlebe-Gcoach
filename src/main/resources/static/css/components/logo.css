@@ -1,5 +1,4 @@
-.G-COACH__title,
-.main-screen {
+.G-COACH__title {
   width: 50%;
   margin: 0 auto;
 }
@@ -16,8 +15,7 @@
   height: 42px;
 }
 
-.G-COACH__title-s,
-.main-screen {
+.G-COACH__title-s {
   width: 50%;
   margin: 0 auto;
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
@@ -39,7 +39,7 @@
         <div class="sidebar-body">
             <div class="sidebar-list">
                 <a th:href="@{/profile_main}"><h3>프로필</h3></a>
-                <a th:href="@{diary/calendar}"><h3>다이어리</h3></a>
+                <a th:href="@{/diary/calendar}"><h3>다이어리</h3></a>
                 <a th:href="@{/history}"><h3>히스토리</h3></a>
                 <a th:href="@{/setting}"><h3>설정</h3></a>
             </div>
@@ -125,6 +125,8 @@
 </footer>
 
 <script th:src="@{https://kit.fontawesome.com/d1dbd1f9d9.js}" crossorigin="anonymous"></script>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/sidebar.js}"></script>
 <script th:inline="javascript">
     $(document).ready(function (e) {
         const cid = [[${dto.cid}]];
@@ -222,7 +224,6 @@
     const audioPlay = document.querySelector("#audioPlay");
     console.log(audioPlay.startDate);
 </script>
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/js/sidebar.js}"></script>
+
 </body>
 </html>
