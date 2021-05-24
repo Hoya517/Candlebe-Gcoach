@@ -29,6 +29,9 @@
         </a>
     </header>
     <h1 class="form-title">G-COACH에 콘텐츠를 업로드해주세요.</h1>
+    <div th:if="${message}">
+        <h1 th:text="${message}"/>
+    </div>
     <!--
     <h1 class="form-title">G-COACH에 콘텐츠가 성공적으로 업로드 되었습니다!</h1>
     -->
@@ -162,9 +165,6 @@
             </tr>
         </table>
     </form>
-    <div th:if="${message}">
-        <h1 th:text="${message}"/>
-    </div>
 </body>
 <script>
     const reader = new FileReader();

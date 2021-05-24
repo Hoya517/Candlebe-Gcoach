@@ -8,6 +8,7 @@ import com.candlebe.gcoach.storage.StorageProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +32,12 @@ public class ContentService {
     public ContentService(ContentRepository contentRepository, StorageProperties properties) {
         this.contentRepository = contentRepository;
         this.rootLocation = Paths.get(properties.getLocation());
+    }
+
+    // 삭제
+    @Transactional
+    public void deleteContent(Long cid) {
+        contentRepository.deleteContent(cid);
     }
 
     // 콘텐츠 파일 저장
@@ -85,6 +92,11 @@ public class ContentService {
         catch (IOException e) {
             throw new StorageException("Failed to store file.", e);
         }
+    }
+
+    //콘텐츠 전체 조회
+    public List<Content> findContents() {
+        return contentRepository.findAll();
     }
 
     // 받아온 검색어로 콘텐츠 제목 검색 후 리턴

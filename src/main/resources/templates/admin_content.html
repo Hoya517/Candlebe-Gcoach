@@ -3,11 +3,11 @@
   <head>
     <link
       rel="stylesheet"
-      th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" th:href="@{css/content.css}" />
+    <link rel="stylesheet" th:href="@{/css/content.css}" />
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -50,86 +50,38 @@
             <th scope="col" class="th7">카테고리2</th>
             <th scope="col" class="th8">카테고리3</th>
             <th scope="col" class="th9">이미지 이름</th>
-            <th scope="col" class="th10">이미지 경로</th>
+<!--            <th scope="col" class="th10">이미지 경로</th>-->
             <th scope="col" class="th11">영상제목</th>
             <th scope="col" class="th12">관리</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>2021.05.23 10:52:30.594929</td>
-            <td>2021.05.24 10:52:30.594929</td>
-            <td>즐거운 명상 시간</td>
-            <td>명상에 참여합시다</td>
-            <td>행복</td>
-            <td>슬픔</td>
-            <td>화남</td>
-            <td>user.png</td>
-            <td>C:\Users\sangJunPark\Pictures\Saved Pictures</td>
-            <td>user.mp3</td>
-            <td><a href="#">삭제</a></td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>2021.05.24</td>
-            <td>2021.05.24</td>
-            <td>즐거운 명상 시간</td>
-            <td>명상에 참여합시다</td>
-            <td>행복</td>
-            <td>슬픔</td>
-            <td>화남</td>
-            <td>user.png</td>
-            <td>C:\Users\sangJunPark\Pictures\Saved Pictures</td>
-            <td>user.mp3</td>
-            <td><a href="#">삭제</a></td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>2021.05.24</td>
-            <td>2021.05.24</td>
-            <td>즐거운 명상 시간</td>
-            <td>명상에 참여합시다</td>
-            <td>행복</td>
-            <td>슬픔</td>
-            <td>화남</td>
-            <td>user.png</td>
-            <td>C:\Users\sangJunPark\Pictures\Saved Pictures</td>
-            <td>user.mp3</td>
-            <td><a href="#">삭제</a></td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>2021.05.24</td>
-            <td>2021.05.24</td>
-            <td>즐거운 명상 시간</td>
-            <td>명상에 참여합시다</td>
-            <td>행복</td>
-            <td>슬픔</td>
-            <td>화남</td>
-            <td>user.png</td>
-            <td>C:\Users\sangJunPark\Pictures\Saved Pictures</td>
-            <td>user.mp3</td>
-            <td><a href="#">삭제</a></td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>2021.05.24</td>
-            <td>2021.05.24</td>
-            <td>즐거운 명상 시간</td>
-            <td>명상에 참여합시다</td>
-            <td>행복</td>
-            <td>슬픔</td>
-            <td>화남</td>
-            <td>user.png</td>
-            <td>C:\Users\sangJunPark\Pictures\Saved Pictures</td>
-            <td>user.mp3</td>
-            <td><a href="#">삭제</a></td>
+          <tr th:each="content : ${contents}">
+            <th th:text="${content.cid}" scope="row"></th>
+            <td th:text="${content.regDate}"></td>
+            <td th:text="${content.modDate}"></td>
+            <td th:text="${content.title}"></td>
+            <td th:text="${content.content}"></td>
+            <td th:text="${content.category1}"></td>
+            <td th:text="${content.category2}"></td>
+            <td th:text="${content.category3}"></td>
+            <td th:text="${content.imgOriginalName}"></td>
+            <td th:text="${content.originalName}"></td>
+            <td><a th:href="'javascript:deleteContent('+${content.cid}+')'">삭제</a></td>
           </tr>
         </tbody>
       </table>
     </form>
   </body>
+  <script>
+    function deleteContent(cid) {
+      var form = document.createElement("form");
+      form.setAttribute("method", "post");
+      form.setAttribute("action", "/admin/contents/" + cid + "/delete");
+      document.body.appendChild(form);
+      form.submit();
+    }
+  </script>
   <script>
     const reader = new FileReader();
 

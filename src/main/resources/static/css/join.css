@@ -30,31 +30,25 @@
     border: none;
   }
 
+.input_1 {
+    width: 100%;
+}
+
+
 .id_box, .phone_box {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
 
-.input_1 {
-    width: 100%;
-}
-
-.submit_1 {
-    width: 39%;
-}
-
-.submit_2 {
-    width: 35%;
-}
-  
 #join-form input:not([type="submit"]) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   }
   
 #join-form input::placeholder {
     color: rgba(0, 0, 0, 0.2);
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: 600;
   }
   
 #join-form input[type="submit"] {
@@ -70,173 +64,15 @@
     font-weight: bold;
     color: rgba(0, 0, 0, 0.7);
   }
-  
-.nextprev_box {
-    margin-top: 15px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+
+#join-form input[type="button"] {
+    border-radius: 10px;
+    background-color: #172853;
+    color: #fff;
+    height: 70px;
+    cursor: pointer;
 }
 
-.prev_box {
-    float: left;
-}
-
-.prevbtn {
-    border-radius: 10px;
-    background-color: #55576f;
-    border: none;
-    cursor: pointer;
-    color: #fff;
-    font-size: 15px;
-    width: 100px;
-    height: 45px;
-  }
-
-.nextbtn {
-    border-radius: 10px;
-    background-color: #55576f;
-    border: none;
-    cursor: pointer;
-    color: #fff;
-    font-size: 15px;
-    width: 100px;
-    height: 45px;
-  }
-
-  @media screen and (max-width: 1200px) {
-    .G-COACH__title {
-      width: 60%;
-    }
-  
-    .join-form__title h1 {
-      margin-bottom: 10px;
-      font-size: 26px;
-    }
-  
-    #join-form {
-      margin-bottom: 20px;
-    }
-  
-    #join-form span {
-      font-size: 22px;
-      padding-top: 35px;
-    }
-  
-    #join-form input {
-      font-size: 22px;
-    }
-  
-    #join-form label {
-      font-size: 16px;
-      font-weight: bold;
-    }
-  
-    #join-form input[type="submit"] {
-      height: 60px;
-    }
-  
-    #join-form a {
-      font-size: 20px;
-    }
-    
-  }
-  
-  @media screen and (max-width: 900px) {
-    .G-COACH__title {
-      width: 70%;
-    }
-    
-    .join-form__title h1 {
-      margin-bottom: 10px;
-      font-size: 24px;
-    }
-  
-    #join-form {
-      margin-bottom: 20px;
-    }
-  
-    #join-form span {
-      font-size: 20px;
-      padding-top: 35px;
-    }
-  
-    #join-form input {
-      font-size: 20px;
-    }
-  
-    #join-form label {
-      font-size: 14px;
-      font-weight: bold;
-    }
-  
-    #join-form input[type="submit"] {
-      height: 55px;
-    }
-  
-    #join-form a {
-      font-size: 18px;
-    }
-  }
-  
-  @media screen and (max-width: 600px) {
-    .G-COACH__title {
-      width: 80%;
-    }
-  
-    .join-form__title h1 {
-      margin-bottom: 10px;
-      font-size: 22px;
-    }
-  
-    #join-form {
-      margin-bottom: 20px;
-    }
-  
-    #join-form span {
-      font-size: 18px;
-      padding-top: 35px;
-      padding-bottom: 5px;
-    }
-  
-    #join-form input {
-      font-size: 18px;
-    }
-  
-    #join-form label {
-      font-size: 14px;
-      font-weight: bold;
-    }
-  
-    #join-form input[type="submit"] {
-      height: 40px;
-      font-size: 12px;
-    }
-  
-    #join-form a {
-      font-size: 16px;
-    }
-
-    .input_1 {
-      width: 70%;
-    }
-  
-    .submit_1 {
-      width: 29%;
-    }
-
-    .prevbtn {
-      font-size: 15px;
-      width: 80px;
-      height: 35px;
-    }
-  
-  .nextbtn {
-      font-size: 15px;
-      width: 80px;
-      height: 35px;
-    }
-  }
   
   @media screen and (max-width: 400px) {
     .G-COACH__title {
@@ -270,17 +106,19 @@
       height: 40px;
       font-size: 12px;
     }
+
+    #join-form input::placeholder {
+      color: rgba(0, 0, 0, 0.2);
+      font-size: 10px;
+      font-weight: 600;
+    }
   
     #join-form a {
       font-size: 16px;
     }
 
     .input_1 {
-      width: 70%;
-    }
-  
-    .submit_1 {
-      width: 29%;
+      width: 100%;
     }
   }
   
@@ -321,6 +159,12 @@
       margin: 20px 0;
       height: 80px;
     }
+
+    #join-form input::placeholder {
+      color: rgba(0, 0, 0, 0.2);
+      font-size: 8px;
+      font-weight: 600;
+    }
   
     #join-form a {
       margin: 20px 0;
@@ -339,10 +183,12 @@
     }
 
     .input_1 {
-      width: 70%;
+      width: 100%;
     }
-  
-    .submit_1 {
-      width: 29%;
+
+    #join-form input::placeholder {
+      color: rgba(0, 0, 0, 0.2);
+      font-size: 8px;
+      font-weight: 600;
     }
   }

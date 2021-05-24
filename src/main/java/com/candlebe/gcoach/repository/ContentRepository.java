@@ -2,7 +2,9 @@ package com.candlebe.gcoach.repository;
 
 import com.candlebe.gcoach.entity.Content;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,4 +38,10 @@ public interface ContentRepository extends JpaRepository<Content, Long> {
     // 검색 기능
     @Query("SELECT t from Content t WHERE t.title LIKE %:search%")
     List<Content> findBySearch(String search);
+
+    // 삭제
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Content c WHERE c.cid = :cid")
+    void deleteContent(Long cid);
 }

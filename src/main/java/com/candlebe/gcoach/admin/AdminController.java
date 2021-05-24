@@ -1,26 +1,44 @@
 package com.candlebe.gcoach.admin;
 
 import com.candlebe.gcoach.dto.ContentUploadDTO;
+import com.candlebe.gcoach.entity.Content;
 import com.candlebe.gcoach.service.ContentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @Log4j2
 @RequiredArgsConstructor
 public class AdminController {
+
     private final ContentService contentService;
 
-    //Upload
+    //contents
+    @GetMapping("/admin/contents")
+    public String adminContents(Model model) {
+        List<Content> contents = contentService.findContents();
+        model.addAttribute("contents", contents);
+
+        return "admin_content";
+    }
+
+    // delete
+    @PostMapping("/admin/contents/{cid}/delete")
+    public String deleteContent(@PathVariable("cid") Long cid) {
+        contentService.deleteContent(cid);
+
+        return "redirect:/admin/contents";
+    }
+
+    //upload
     @GetMapping("/admin/contents/upload")
     public String listUploadedFiles(Model model) throws IOException {
 
@@ -36,7 +54,7 @@ public class AdminController {
 
         contentService.save(file, img, dto);
         redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
+                "업로드 성공 :: " + file.getOriginalFilename());
 
         return "redirect:/admin/contents/upload";
     }
