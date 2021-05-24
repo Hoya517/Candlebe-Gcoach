@@ -47,4 +47,6 @@ public class MemberDTO{
     private String interest; // 관심사
 
     private boolean checkLogin;
+
+    private boolean admin;
 }
