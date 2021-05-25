@@ -1,6 +1,7 @@
 package com.candlebe.gcoach.service;
 
 import com.candlebe.gcoach.dto.MemberDTO;
+import com.candlebe.gcoach.entity.Content;
 import com.candlebe.gcoach.entity.Member;
 import com.candlebe.gcoach.entity.MemberRole;
 import com.candlebe.gcoach.repository.MemberRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,6 +22,10 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
+
+    public List<Member> findMembers() {
+        return memberRepository.findAll();
+    }
 
     @Override
     public String checkNickname(String nickname) {

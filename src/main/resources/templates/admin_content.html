@@ -3,7 +3,7 @@
   <head>
     <link
       rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
@@ -22,8 +22,8 @@
 
   <body>
     <header>
-      <a href="/admin_member.html"><img th:src="@{/images/logo_white.png}" /></a>
-      <a href="./admin_member.html" class="member-page">
+      <a th:href="@{/}"><img th:src="@{/images/logo_white.png}" /></a>
+      <a th:href="@{/admin/members}" class="member-page">
         <h1>회원 관리</h1>
       </a>
       <a th:href="@{/admin/contents}" class="contents-page">

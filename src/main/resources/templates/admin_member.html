@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <link
+      rel="stylesheet"
+      th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" th:href="@{/css/member.css}" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원관리 페이지</title>
+    <style>
+      .member-page h1 {
+        color: #ffffff;
+        opacity: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <a th:href="@{/}"><img th:src="@{/images/logo_white.png}" /></a>
+      <a th:href="@{/admin/members}" class="member-page">
+        <h1>회원 관리</h1>
+      </a>
+      <a th:href="@{/admin/contents}" class="contents-page">
+        <h1>콘텐츠 관리</h1>
+      </a>
+      <a th:href="@{/admin/contents/upload}" class="upload-page">
+        <h1>콘텐츠 업로드</h1>
+      </a>
+    </header>
+    <h1 class="form-title">회원관리</h1>
+    <!--
+    <h1 class="form-title">G-COACH에 콘텐츠가 성공적으로 업로드 되었습니다!</h1>
+    -->
+    <form action="" id="memberForm">
+      <table class="table table-sm">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" class="th1">순서</th>
+            <th scope="col" class="th2">가입날짜</th>
+            <th scope="col" class="th3">감정</th>
+            <th scope="col" class="th4">관심사</th>
+            <th scope="col" class="th5">이름</th>
+            <th scope="col" class="th6">닉네임</th>
+            <th scope="col" class="th7">전화번호</th>
+            <th scope="col" class="th8">소셜로그인타입</th>
+            <th scope="col" class="th9">아이디</th>
+            <th scope="col" class="th10" colspan="2">관리</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="member : ${members}">
+            <th th:text="${member.mid}" scope="row">1</th>
+            <td th:text="${member.regDate}"></td>
+            <td th:text="${member.emotion}"></td>
+            <td th:text="${member.interest}"></td>
+            <td th:text="${member.name}"></td>
+            <td th:text="${member.nickname}"></td>
+            <td th:text="${member.phone}"></td>
+            <td th:text="${member.socialType}"></td>
+            <td th:text="${member.username}"></td>
+            <td><a th:href="'javascript:deleteMember('+${member.mid}+')'">삭제</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </body>
+  <script>
+    function deleteMember(mid) {
+      var form = document.createElement("form");
+      form.setAttribute("method", "post");
+      form.setAttribute("action", "/admin/members/" + mid + "/delete");
+      document.body.appendChild(form);
+      form.submit();
+    }
+  </script>
+</html>

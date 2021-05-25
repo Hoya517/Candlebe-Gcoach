@@ -69,7 +69,4 @@ public class DiaryService {
         return diary.getId();
     }
 
-    public List<Diary> returnDate(Member member) {
-        return diaryRepository.findByMember(member);
-    }
 }

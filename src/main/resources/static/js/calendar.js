@@ -34,13 +34,15 @@ const renderCalendar = () => {
 
     const firstDateIndex = dates.indexOf(1);
     const lastDateIndex = dates.lastIndexOf(TLDate);
+
     dates.forEach((date, i) => {
         const condition = i >= firstDateIndex && i < lastDateIndex + 1
-                          ? 'this'
-                          : 'rest';
-
+                        ? 'this'
+                        : 'rest';
         if(condition==='this') {
-            dates[i] = `<a href="/diary/today/${viewYear}/${(viewMonth+1)<10 ? '0'+(viewMonth+1) : (viewMonth+1)}/${date<10 ? '0'+date : date}"  class="date"><div><span class="${condition}">${date}</span></div></a>`;
+            dates[i] = `<a href="/diary/today/${viewYear}/${(viewMonth+1)<10 ? '0'+(viewMonth+1) : (viewMonth+1)}/${date<10 ? '0'+date : date}"  class="date">
+                            <div><span class="${condition}">${date}</span></div>
+                        </a>`;
         } else {
             dates[i] = `<div class="date"><span class="${condition}">${date}</span></div>`;
         }
