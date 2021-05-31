@@ -8,6 +8,7 @@ import com.candlebe.gcoach.service.ContentService;
 import com.candlebe.gcoach.service.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.util.List;
 @Controller
 @Log4j2
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
     private final ContentService contentService;
@@ -85,8 +87,7 @@ public class AdminController {
                                    ContentUploadDTO dto) {
 
         contentService.save(file, img, dto);
-        redirectAttributes.addFlashAttribute("message",
-                "업로드 성공 :: " + file.getOriginalFilename());
+        redirectAttributes.addFlashAttribute("message", file.getOriginalFilename());
 
         return "redirect:/admin/contents/upload";
     }

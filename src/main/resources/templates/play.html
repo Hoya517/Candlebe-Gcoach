@@ -94,12 +94,12 @@
                 <div class="play-screen__content">
                     <div class="play-screen__content-column">
                         <div class="play-screen__thumbnail">
-                            <img src="/images/thumbnail_example.jpg" alt="">
+                            <img th:src="@{'/stream/' + ${content.imgOriginalName}}" alt="">
                         </div>
                     </div>
                     <div class="play-screen__content-column">
                         <h5 class="play-screen__content-title" th:text="${content.title}">동영상제목</h5>
-                        <h6 class="play-screen__content-text">동영상내용입니다.</h6>
+                        <h6 class="play-screen__content-text" th:text="${content.content}">동영상내용입니다.</h6>
                     </div>
                 </div>
             </a>

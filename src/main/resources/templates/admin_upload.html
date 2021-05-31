@@ -17,8 +17,8 @@
 
 <body>
     <header>
-        <img th:src="@{/images/logo_white.png}">
-        <a th:href="@{/}" class="member-page">
+        <a th:href="@{/}"><img th:src="@{/images/logo_white.png}" /></a>
+        <a th:href="@{/admin/members}" class="member-page">
             <h1>회원 관리</h1>
         </a>
         <a th:href="@{/admin/contents}" class="contents-page">
@@ -30,7 +30,7 @@
     </header>
     <h1 class="form-title">G-COACH에 콘텐츠를 업로드해주세요.</h1>
     <div th:if="${message}">
-        <h1 th:text="${message}"/>
+        <h1 class="form-title" th:text="${message} + ' 가 업로드 되었습니다!'"/>
     </div>
     <!--
     <h1 class="form-title">G-COACH에 콘텐츠가 성공적으로 업로드 되었습니다!</h1>
@@ -46,13 +46,13 @@
             <tr>
                 <td class="table-left"><p>카테고리</p></td>
                 <td class="table-right__select">
-                    <select name="category" id="select-category1">
+                    <select name="category1" id="select-category1">
                         <option value="">category 1</option>
                         <option value="호흡">호흡</option>
                         <option value="명상">명상</option>
                         <option value="힐링">힐링</option>
                         <option value="행복">행복</option>
-                        <option value="수면">숙면</option>
+                        <option value="숙면">숙면</option>
                         <option value="관계증진">관계증진</option>
                         <option value="집중력">집중력</option>
                         <option value="자기이해">자기이해</option>

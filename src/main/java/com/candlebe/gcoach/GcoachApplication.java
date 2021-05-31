@@ -18,11 +18,11 @@ public class GcoachApplication {
 		SpringApplication.run(GcoachApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner init(ContentService contentService) {
-		return (args) -> {
-			contentService.deleteAll();
-			contentService.init();
-		};
-	}
+//	@Bean
+//	CommandLineRunner init(ContentService contentService) {
+//		return (args) -> {
+//			contentService.deleteAll();
+//			contentService.init();
+//		};
+//	}
 }

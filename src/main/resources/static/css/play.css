@@ -3,12 +3,10 @@
     margin: 0;
 }
 
-.play-background {
+.play-background img {
     width: 100%;
     height: 400px;
     position: relative;
-    background: url(../images/background_example.jpg) no-repeat center;
-    background-size: cover;
 }
 
 .contents-play-audio{
@@ -67,6 +65,7 @@
 
 .play-screen__thumbnail img {
     height: 80px;
+    width: 120px;
 }
 
 .user-comment img {
