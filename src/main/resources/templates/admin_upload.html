@@ -28,7 +28,9 @@
             <h1>콘텐츠 업로드</h1>
         </a>
     </header>
-    <h1 class="form-title">G-COACH에 콘텐츠를 업로드해주세요.</h1>
+    <div th:if="${message==null || message==''}">
+        <h1 class="form-title">G-COACH에 콘텐츠를 업로드해주세요.</h1>
+    </div>
     <div th:if="${message}">
         <h1 class="form-title" th:text="${message} + ' 가 업로드 되었습니다!'"/>
     </div>
