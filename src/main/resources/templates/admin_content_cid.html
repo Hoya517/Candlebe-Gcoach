@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자페이지</title>
+    <style>
+        .upload-page h1 {
+            color: #ffffff;
+            opacity: 1.0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a th:href="@{/}"><img th:src="@{/images/logo_white.png}" /></a>
+        <a th:href="@{/admin/members}" class="member-page">
+            <h1>회원 관리</h1>
+        </a>
+        <a th:href="@{/admin/contents}" class="contents-page">
+            <h1>콘텐츠 관리</h1>
+        </a>
+        <a th:href="@{/admin/contents/upload}" class="upload-page">
+            <h1>콘텐츠 업로드</h1>
+        </a>
+    </header>
+
+    <form id="uploadform" method="GET" th:action="@{/admin/contents}">
+        <table class="form-table">
+            <tr>
+                <td class="table-left"><p>제목</p></td>
+                <td class="table-right">
+                    <input type="text" name="title" class="input__text" maxlength="20" th:placeholder="${content.title}" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td class="table-left"><p>카테고리</p></td>
+                <td class="table-right">
+                    <input type="text" name="category1" class="input__text" maxlength="20" th:placeholder="${content.category1}" disabled>
+                    <input type="text" name="category2" class="input__text" maxlength="20" th:placeholder="${content.category2}" disabled>
+                    <input type="text" name="category3" class="input__text" maxlength="20" th:placeholder="${content.category3}" disabled>
+                </td>
+            </tr>
+            <tr>
+                <td class="table-left"><p>내용</p></td>
+                <td class="table-right">
+                    <input type="text" name="content" class="input__text" maxlength="20" th:placeholder="${content.content}" disabled>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="table-left"><p>MP3 파일</p></td>
+                <div class="contents-play-audio">
+                    <audio class="contents-play-audio" id="audioPlay" controls autoplay>
+                        <source th:src="@{'/stream/' + ${content.originalName}}" type="audio/mp3">
+                    </audio>
+                </div>
+<!--                    <input type="text" id="file-route" disabled="disabled" value="파일을 선택하세요.">-->
+<!--                    <label class="upload-btn" for="file-picker">파일 선택</label>-->
+<!--                    <input type="file" name="file" id="file-picker" required=true>-->
+            </tr>
+
+            <tr>
+                <td class="table-left"><p>썸네일 이미지</p></td>
+                <div class="play-screen__thumbnail">
+                    <img th:src="@{'/stream/' + ${content.imgOriginalName}}" alt="">
+                </div>
+<!--                    <input type="text" id="img-route" disabled="disabled" value="파일을 선택하세요.">-->
+<!--                    <label for="img-picker">파일 선택</label>-->
+<!--                    <input type="file" name="img" id="img-picker" required=true>-->
+            </tr>
+            <tr>
+                <td colspan="2" class="table-bottom"><input type="submit" value="확인" id="upload"></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

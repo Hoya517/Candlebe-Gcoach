@@ -1,6 +1,7 @@
 package com.candlebe.gcoach.admin;
 
 import com.candlebe.gcoach.dto.ContentUploadDTO;
+import com.candlebe.gcoach.dto.MemberDTO;
 import com.candlebe.gcoach.entity.Content;
 import com.candlebe.gcoach.entity.Member;
 import com.candlebe.gcoach.repository.*;
@@ -40,6 +41,7 @@ public class AdminController {
 
         return "admin_member";
     }
+
     // delete_member
     @PostMapping("/admin/members/{mid}/delete")
     public String deleteMember(@PathVariable("mid") Long mid) {
@@ -64,12 +66,33 @@ public class AdminController {
         return "admin_content";
     }
 
+    //search content
+    @GetMapping("/admin/content")
+    public String searchContents(@ModelAttribute("searchContent") SearchContent searchContent, Model model) {
+        try {
+            List<Content> contents = contentService.findContentInAdmin(searchContent.getCategory(), searchContent.getSearch());
+            model.addAttribute("contents", contents);
+        } catch (Exception e) {
+            return "redirect:/admin/content/upload";
+        }
+        return "admin_content_search";
+    }
+
     // delete_content
     @PostMapping("/admin/contents/{cid}/delete")
     public String deleteContent(@PathVariable("cid") Long cid) {
         contentService.deleteContent(cid);
 
         return "redirect:/admin/contents";
+    }
+
+    //content
+    @GetMapping("/admin/contents/{cid}")
+    public String selectContent(@PathVariable("cid") Long cid, Model model) {
+        Content content = contentService.findOne(cid).get();
+        model.addAttribute("content", content);
+
+        return "admin_content_cid";
     }
 
     //upload

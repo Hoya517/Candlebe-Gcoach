@@ -39,6 +39,11 @@ public interface ContentRepository extends JpaRepository<Content, Long> {
     @Query("SELECT t from Content t WHERE t.title LIKE %:search%")
     List<Content> findBySearch(String search);
 
+    // 관리자페이지-콘텐츠관리
+    // 카테고리 & 제목으로 검색
+    @Query("SELECT t from Content t WHERE (t.category1 = :category or t.category2 = :category or t.category3 = :category) and t.title LIKE %:search%")
+    List<Content> findByCategoryAndSearch(String category, String search);
+
     // 삭제
     @Modifying
     @Transactional

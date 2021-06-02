@@ -83,6 +83,9 @@
           </tr>
         </thead>
         <tbody>
+        <div th:if="contents==null">
+          <h1 class="form-title">G-COACH에 콘텐츠를 업로드해주세요.</h1>
+        </div>
           <tr th:each="content : ${contents}">
             <th th:text="${content.cid}" scope="row"></th>
             <td th:onclick="'location.href=\''+ @{/admin/contents/{cid} (cid=${content.cid})} + '\''" th:text="${content.title}"></td>
