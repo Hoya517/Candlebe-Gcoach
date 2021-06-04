@@ -80,7 +80,7 @@ public class AdminController {
 
     // delete_content
     @PostMapping("/admin/contents/{cid}/delete")
-    public String deleteContent(@PathVariable("cid") Long cid) {
+    public String deleteContent( @PathVariable("cid") Long cid) {
         contentService.deleteContent(cid);
 
         return "redirect:/admin/contents";

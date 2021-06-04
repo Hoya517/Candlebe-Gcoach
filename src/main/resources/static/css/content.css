@@ -4,6 +4,10 @@
   font-family: "Noto Sans KR", sans-serif;
 }
 
+:focus {
+  outline: none;
+}
+
 header {
   display: flex;
   flex-direction: row;
@@ -26,6 +30,7 @@ header h1 {
   font-weight: 500;
   margin: 0 10px;
   font-size: 22px;
+  cursor: pointer;
 }
 
 header h1:hover {
@@ -33,18 +38,54 @@ header h1:hover {
 }
 
 .form-title {
-  margin-top: 20px;
-  margin-left: 50px;
-  margin-bottom: 10px;
   font-size: 32px;
   color: #172853;
   font-weight: 600;
 }
 
+.top {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 50px 10px 50px;
+}
+
+/*****검색*****/
+#searchForm {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+#select-category {
+  width: 150px;
+  height: 30px;
+  border: none;
+}
+
+.main-header__right-input {
+  border: none;
+  width: 250px;
+  height: 28px;
+}
+
+.main-header__right-input::placeholder {
+  color: rgba(0, 0, 0, 0.0);
+  font-weight: bold;
+}
+
+.main-header__right-icon {
+  background-color: transparent;
+  border: none;
+  font-size: 28px;
+}
+/*************/
+
 #contentForm {
   margin-top: 20px;
   margin-left: 50px;
   margin-right: 50px;
+}
+
+.table td {
+  cursor: pointer;
 }
 
 .table {

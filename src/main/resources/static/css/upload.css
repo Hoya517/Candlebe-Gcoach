@@ -35,6 +35,7 @@ header h1 {
   font-weight: 500;
   margin: 0 10px;
   font-size: 22px;
+  cursor: pointer;
 }
 
 header h1:hover {
@@ -42,12 +43,45 @@ header h1:hover {
 }
 
 .form-title {
-  margin-top: 20px;
-  margin-left: 50px;
-  margin-bottom: 10px;
   font-size: 32px;
   color: #172853;
+  font-weight: 600;
 }
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 50px 10px 50px;
+}
+
+/*****검색*****/
+#searchForm {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+#select-category {
+  width: 150px;
+  height: 30px;
+  border: none;
+}
+
+.main-header__right-input {
+  border: none;
+  width: 250px;
+  height: 28px;
+}
+
+.main-header__right-input::placeholder {
+  color: rgba(0, 0, 0, 0.0);
+  font-weight: bold;
+}
+
+.main-header__right-icon {
+  background-color: transparent;
+  border: none;
+  font-size: 28px;
+}
+/*************/
 
 #uploadform {
   margin-top: 20px;
@@ -165,4 +199,37 @@ header h1:hover {
 
 #upload:hover {
   background-color: #7e819b;
+}
+
+/***콘텐츠 정보***/
+.contents-play-audio {
+  width: 798px;
+  height: 36px;
+}
+
+.play-screen__thumbnail {
+  border: tomato;
+}
+
+.play-screen__thumbnail img {
+  width: 210px;
+  height: 120px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  vertical-align: middle;
+}
+
+.table-right__select input {
+  width: calc(100% / 3);
+  height: 36px;
+}
+
+.table-right__audio {
+  width: 798px;
+  height: 36px;
+  padding: 0px;
+  margin: 0px;
+  align-items: center;
+  background-color: rgba(239, 239, 239, 0.7);
+  border: rgba(118, 118, 118, 0.3) 1px solid;
 }

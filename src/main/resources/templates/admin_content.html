@@ -21,41 +21,6 @@
   </head>
 
   <body>
-<!--  검색 추가  -->
-    <form th:action="@{/admin/content}" th:object="${searchContent}" th:method="get" name="searchForm">
-      <select name="category" id="select-category1">
-        <option value="">category</option>
-        <option value="호흡">호흡</option>
-        <option value="명상">명상</option>
-        <option value="힐링">힐링</option>
-        <option value="행복">행복</option>
-        <option value="숙면">숙면</option>
-        <option value="관계증진">관계증진</option>
-        <option value="집중력">집중력</option>
-        <option value="자기이해">자기이해</option>
-        <option value="긍정">긍정</option>
-        <option value="건강">건강</option>
-        <option value="자존감">자존감</option>
-        <option value="스트레스">스트레스</option>
-        <option value="운동">운동</option>
-        <option value="즐거움">즐거움</option>
-        <option value="슬픔">슬픔</option>
-        <option value="외로움">외로움</option>
-        <option value="우울">우울</option>
-        <option value="화">화</option>
-        <option value="불안">불안</option>
-        <option value="게으름">게으름</option>
-        <option value="피곤">피곤</option>
-        <option value="힘듦">힘듦</option>
-        <option value="짬짬히">짬짬히</option>
-        <option value="자기계발">자기계발</option>
-        <option value="키즈">키즈</option>
-        <option value="asmr">asmr</option>
-      </select>
-      <input class="main-header__right-input" name="search" type="text" placeholder="제목을 검색해주세요.">
-      <button class="main-header__right-icon" type="submit"><i class="fas fa-search"></i></button>
-    </form>
-
     <header>
       <a th:href="@{/}"><img th:src="@{/images/logo_white.png}" /></a>
       <a th:href="@{/admin/members}" class="member-page">
@@ -68,7 +33,44 @@
         <h1>콘텐츠 업로드</h1>
       </a>
     </header>
-    <h1 class="form-title">콘텐츠 관리</h1>
+
+    <div class="top">
+      <h1 class="form-title">콘텐츠 관리</h1>
+      <form th:action="@{/admin/content}" th:method="get" name="searchForm" id="searchForm">
+        <select name="category" id="select-category">
+          <option value="">category</option>
+          <option value="호흡">호흡</option>
+          <option value="명상">명상</option>
+          <option value="힐링">힐링</option>
+          <option value="행복">행복</option>
+          <option value="숙면">숙면</option>
+          <option value="관계증진">관계증진</option>
+          <option value="집중력">집중력</option>
+          <option value="자기이해">자기이해</option>
+          <option value="긍정">긍정</option>
+          <option value="건강">건강</option>
+          <option value="자존감">자존감</option>
+          <option value="스트레스">스트레스</option>
+          <option value="운동">운동</option>
+          <option value="즐거움">즐거움</option>
+          <option value="슬픔">슬픔</option>
+          <option value="외로움">외로움</option>
+          <option value="우울">우울</option>
+          <option value="화">화</option>
+          <option value="불안">불안</option>
+          <option value="게으름">게으름</option>
+          <option value="피곤">피곤</option>
+          <option value="힘듦">힘듦</option>
+          <option value="짬짬히">짬짬히</option>
+          <option value="자기계발">자기계발</option>
+          <option value="키즈">키즈</option>
+          <option value="asmr">asmr</option>
+        </select>
+        <input class="main-header__right-input" name="search" type="text" placeholder="제목을 검색해주세요.">
+        <button class="main-header__right-icon" type="submit"><i class="fas fa-search"></i></button>
+      </form>
+    </div>
+
     <form action="" id="contentForm">
       <table class="table table-sm">
         <thead class="thead-dark">
@@ -85,7 +87,12 @@
         <tbody>
           <tr th:each="content : ${contents}">
             <th th:text="${content.cid}" scope="row"></th>
+
+            <!-- 이거 누르면 admin_content_cid.html로 이동-->
+<!--            마우스 hover하면 I자로 뜨는데 이거 어색하면 변경해줘도 되고! (텍스트 색 변경? 마우스 커서 변경?) -->
             <td th:onclick="'location.href=\''+ @{/admin/contents/{cid} (cid=${content.cid})} + '\''" th:text="${content.title}"></td>
+            <!--                -->
+
             <td th:text="${content.content}"></td>
             <td th:text="${content.category1}"></td>
             <td th:text="${content.category2}"></td>
