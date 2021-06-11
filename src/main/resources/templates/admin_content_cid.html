@@ -10,103 +10,101 @@
 </head>
 
 <body>
-    <header>
-        <a th:href="@{/}"><img th:src="@{/images/logo_white.png}" /></a>
-        <a th:href="@{/admin/members}" class="member-page">
-            <h1>회원 관리</h1>
-        </a>
-        <a th:href="@{/admin/contents}" class="contents-page">
-            <h1>콘텐츠 관리</h1>
-        </a>
-
-<!--        업로드폼 복붙해서 헤더에 콘텐츠 업로드 글씨가 하얗다.. 이거 회색으로 변경!!!-->
-        <a th:href="@{/admin/contents/upload}" class="upload-page">
-            <h1>콘텐츠 업로드</h1>
-        </a>
-    </header>
-    <div class="top">
-        <h1 class="form-title">콘텐츠 관리</h1>
-        <form th:action="@{/admin/content}" th:method="get" name="searchForm" id="searchForm">
-            <select name="category" id="select-category">
-                <option value="">category</option>
-                <option value="호흡">호흡</option>
-                <option value="명상">명상</option>
-                <option value="힐링">힐링</option>
-                <option value="행복">행복</option>
-                <option value="숙면">숙면</option>
-                <option value="관계증진">관계증진</option>
-                <option value="집중력">집중력</option>
-                <option value="자기이해">자기이해</option>
-                <option value="긍정">긍정</option>
-                <option value="건강">건강</option>
-                <option value="자존감">자존감</option>
-                <option value="스트레스">스트레스</option>
-                <option value="운동">운동</option>
-                <option value="즐거움">즐거움</option>
-                <option value="슬픔">슬픔</option>
-                <option value="외로움">외로움</option>
-                <option value="우울">우울</option>
-                <option value="화">화</option>
-                <option value="불안">불안</option>
-                <option value="게으름">게으름</option>
-                <option value="피곤">피곤</option>
-                <option value="힘듦">힘듦</option>
-                <option value="짬짬히">짬짬히</option>
-                <option value="자기계발">자기계발</option>
-                <option value="키즈">키즈</option>
-                <option value="asmr">asmr</option>
-            </select>
-            <input class="main-header__right-input" name="search" type="text" placeholder="제목을 검색해주세요.">
-            <button class="main-header__right-icon" type="submit"><i class="fas fa-search"></i></button>
-        </form>
-    </div>
-    <form id="uploadform" method="GET" th:action="@{/admin/contents}">
-        <table class="form-table">
-            <tr>
-                <td class="table-left"><p>제목</p></td>
-                <td class="table-right">
-                    <input type="text" name="title" class="input__text" maxlength="20" th:placeholder="${content.title}" disabled>
-                </td>
-            </tr>
-            <tr>
-                <td class="table-left"><p>카테고리</p></td>
-                <td class="table-right">
-                    <input type="text" name="category1" class="input__text" maxlength="20" th:placeholder="${content.category1}" disabled>
-                    <input type="text" name="category2" class="input__text" maxlength="20" th:placeholder="${content.category2}" disabled>
-                    <input type="text" name="category3" class="input__text" maxlength="20" th:placeholder="${content.category3}" disabled>
-                </td>
-            </tr>
-            <tr>
-                <td class="table-left"><p>내용</p></td>
-                <td class="table-right">
-                    <input type="text" name="content" class="input__text" maxlength="20" th:placeholder="${content.content}" disabled>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="table-left"><p>MP3 파일</p></td>
-                <td class="table-right__audio">
-                    <div class="contents-play-audio">
-                        <audio class="contents-play-audio" id="audioPlay" controls autoplay>
-                            <source th:src="@{'/stream/' + ${content.originalName}}" type="audio/mp3">
-                        </audio>
-                    </div>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="table-left"><p>썸네일 이미지</p></td>
-                <td class="table-right__audio">
-                    <div class="play-screen__thumbnail">
-                        <img th:src="@{'/stream/' + ${content.imgOriginalName}}" alt="">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" class="table-bottom"><input type="submit" value="확인" id="upload"></td>
-            </tr>
-        </table>
+<header>
+    <a th:href="@{/}"><img th:src="@{/images/logo_white.png}" /></a>
+    <a th:href="@{/admin/contents}" class="contents-page">
+        <h1>콘텐츠 관리</h1>
+    </a>
+    <a th:href="@{/admin/contents/upload}" class="upload-page">
+        <h1>콘텐츠 업로드</h1>
+    </a>
+    <a th:href="@{/admin/members}" class="member-page">
+        <h1>회원 관리</h1>
+    </a>
+</header>
+<div class="top">
+    <h1 class="form-title">콘텐츠 관리</h1>
+    <form th:action="@{/admin/content}" th:method="get" name="searchForm" id="searchForm">
+        <select name="category" id="select-category">
+            <option value="">category</option>
+            <option value="호흡">호흡</option>
+            <option value="명상">명상</option>
+            <option value="힐링">힐링</option>
+            <option value="행복">행복</option>
+            <option value="숙면">숙면</option>
+            <option value="관계증진">관계증진</option>
+            <option value="집중력">집중력</option>
+            <option value="자기이해">자기이해</option>
+            <option value="긍정">긍정</option>
+            <option value="건강">건강</option>
+            <option value="자존감">자존감</option>
+            <option value="스트레스">스트레스</option>
+            <option value="운동">운동</option>
+            <option value="즐거움">즐거움</option>
+            <option value="슬픔">슬픔</option>
+            <option value="외로움">외로움</option>
+            <option value="우울">우울</option>
+            <option value="화">화</option>
+            <option value="불안">불안</option>
+            <option value="게으름">게으름</option>
+            <option value="피곤">피곤</option>
+            <option value="힘듦">힘듦</option>
+            <option value="짬짬히">짬짬히</option>
+            <option value="자기계발">자기계발</option>
+            <option value="키즈">키즈</option>
+            <option value="asmr">asmr</option>
+        </select>
+        <input class="main-header__right-input" name="search" type="text" placeholder="제목을 검색해주세요.">
+        <button class="main-header__right-icon" type="submit"><i class="fas fa-search"></i></button>
     </form>
+</div>
+<form id="uploadform" method="GET" th:action="@{/admin/contents}">
+    <table class="form-table">
+        <tr>
+            <td class="table-left"><p>제목</p></td>
+            <td class="table-right">
+                <input type="text" name="title" class="input__text" maxlength="20" th:placeholder="${content.title}" disabled>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-left"><p>카테고리</p></td>
+            <td class="table-right">
+                <input type="text" name="category1" class="input__text" maxlength="20" th:placeholder="${content.category1}" disabled>
+                <input type="text" name="category2" class="input__text" maxlength="20" th:placeholder="${content.category2}" disabled>
+                <input type="text" name="category3" class="input__text" maxlength="20" th:placeholder="${content.category3}" disabled>
+            </td>
+        </tr>
+        <tr>
+            <td class="table-left"><p>내용</p></td>
+            <td class="table-right">
+                <input type="text" name="content" class="input__text" maxlength="20" th:placeholder="${content.content}" disabled>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="table-left"><p>MP3 파일</p></td>
+            <td class="table-right__audio">
+                <div class="contents-play-audio">
+                    <audio class="contents-play-audio" id="audioPlay" controls autoplay>
+                        <source th:src="@{'/stream/' + ${content.originalName}}" type="audio/mp3">
+                    </audio>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="table-left"><p>썸네일 이미지</p></td>
+            <td class="table-right__audio">
+                <div class="play-screen__thumbnail">
+                    <img th:src="@{'/stream/' + ${content.imgOriginalName}}" alt="">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="table-bottom"><input type="submit" value="확인" id="upload"></td>
+        </tr>
+    </table>
+</form>
 </body>
 <script th:src="@{https://kit.fontawesome.com/d1dbd1f9d9.js}" crossorigin="anonymous"></script>
 </html>

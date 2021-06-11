@@ -1,7 +1,10 @@
 package com.candlebe.gcoach.dto;
 
 import lombok.*;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Data
 @ToString

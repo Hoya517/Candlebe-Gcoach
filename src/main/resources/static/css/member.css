@@ -41,10 +41,14 @@ header h1:hover {
   font-weight: 600;
 }
 
-#memberForm {
+#memberForm, #searchForm {
   margin-top: 20px;
   margin-left: 50px;
   margin-right: 50px;
+}
+
+#searchForm > div {
+  width: 100%;
 }
 
 .table {
@@ -84,34 +88,31 @@ tbody tr td {
 }
 
 .th1 {
-  width: 3%;
+  width: 5%;
 }
 .th2 {
-  width: 13%;
+  width: 18%;
 }
 .th3 {
-  width: 5%;
+  width: 11%;
 }
 .th4 {
-  width: 5%;
+  width: 11%;
 }
 .th5 {
-  width: 5%;
+  width: 11%;
 }
 .th6 {
-  width: 5%;
+  width: 11%;
 }
 .th7 {
-  width: 5%;
+  width: 11%;
 }
 .th8 {
-  width: 10%;
+  width: 11%;
 }
 .th9 {
-  width: 8%;
-}
-.th10 {
-  width: 5%;
+  width: 11%;
 }
 
 /*

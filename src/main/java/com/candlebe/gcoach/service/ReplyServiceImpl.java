@@ -28,7 +28,7 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public List<ReplyDTO> getListOfReply(Long cid) {
         Content content = Content.builder().cid(cid).build();
-        List<Reply> result = replyRepository.findByContent(content);
+        List<Reply> result = replyRepository.findByContentOrderByRidDesc(content);
         return result.stream().map(this::entityToDto).collect(Collectors.toList());
     }
 }

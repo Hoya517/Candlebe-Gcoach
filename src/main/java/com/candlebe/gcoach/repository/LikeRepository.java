@@ -27,4 +27,9 @@ public interface LikeRepository extends JpaRepository<Likes, Long> {
     @Transactional
     @Query("DELETE FROM Likes l WHERE l.member = :member")
     void deleteLikes(Member member);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Likes l WHERE l.content = :content")
+    void deleteLikes(Content content);
 }

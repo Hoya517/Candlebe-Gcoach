@@ -40,7 +40,6 @@ public class MemberOAuth2UserDetailsService extends DefaultOAuth2UserService {
         log.info(userRequest.getAdditionalParameters()); // 연결때 사용한 파라미터
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
-
         log.info("--------------------");
         // 처리 결과로 나오는 OAuth2User 객체의 내부의 값 확인
         oAuth2User.getAttributes().forEach((k, v) -> {
@@ -82,9 +81,12 @@ public class MemberOAuth2UserDetailsService extends DefaultOAuth2UserService {
             return result.get();
         }
 
+        int idx = username.indexOf("@");
+        String nickname = username.substring(0, idx);
+
         Member member = Member.builder()
                 .username(username)
-                .nickname(username)
+                .nickname(nickname)
                 .password(passwordEncoder.encode("1111"))
                 .name(username)
                 .formSocial(true)

@@ -33,7 +33,6 @@
                 <img th:src="@{/images/userimage.jpg}">
             </div>
             <div class="user-profile">
-                <h3 class="username">[[${memberDTO.username}]]</h3>
                 <h3 class="usernickname">[[${memberDTO.nickname}]]</h3>
             </div>
         </div>
@@ -43,6 +42,7 @@
                 <a th:href="@{/diary/calendar}"><h3>다이어리</h3></a>
                 <a th:href="@{/history}"><h3>히스토리</h3></a>
                 <a th:href="@{/setting}"><h3>설정</h3></a>
+                <a th:if="${memberDTO.admin}" th:href="@{/admin/contents}"><h3>관리자 페이지</h3></a>
             </div>
         </div>
     </div>

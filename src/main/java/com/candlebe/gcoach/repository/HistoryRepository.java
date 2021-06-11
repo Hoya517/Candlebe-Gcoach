@@ -1,5 +1,6 @@
 package com.candlebe.gcoach.repository;
 
+import com.candlebe.gcoach.entity.Content;
 import com.candlebe.gcoach.entity.History;
 import com.candlebe.gcoach.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +22,9 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
     @Transactional
     @Query("DELETE FROM History h WHERE h.member = :member")
     void deleteHistories(Member member);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM History h WHERE h.content = :content")
+    void deleteHistories(Content content);
 }

@@ -16,11 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @Log4j2
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('USER')")
+@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 public class HistoryController {
 
     private final MemberRepository memberRepository;
@@ -32,9 +33,13 @@ public class HistoryController {
         log.info("getHistory..........");
         MemberDTO memberDTO = memberService.authMemberDtoToMemberDto(authMemberDTO);
         model.addAttribute("memberDTO", memberDTO);
-        Member member = memberRepository.findByUsername(authMemberDTO.getUsername(), authMemberDTO.isFormSocial()).orElseThrow();
-        List<History> histories = historyRepository.getHistoryWithAll(member);
-        model.addAttribute("histories", histories);
-        return "history";
+        Optional<Member> members = memberRepository.findByUsername(authMemberDTO.getUsername(), authMemberDTO.isFormSocial());
+        if (members.isPresent()) {
+            Member member = members.get();
+            List<History> histories = historyRepository.getHistoryWithAll(member);
+            model.addAttribute("histories", histories);
+            return "history";
+        }
+        return "redirect:/logout";
     }
 }

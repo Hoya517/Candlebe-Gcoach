@@ -32,7 +32,6 @@
                 <img th:src="@{/images/userimage.jpg}">
             </div>
             <div class="user-profile">
-                <h3 class="username">[[${memberDTO.username}]]</h3>
                 <h3 class="usernickname">[[${memberDTO.nickname}]]</h3>
             </div>
         </div>
@@ -42,6 +41,7 @@
                 <a th:href="@{/diary/calendar}"><h3>다이어리</h3></a>
                 <a th:href="@{/history}"><h3>히스토리</h3></a>
                 <a th:href="@{/setting}"><h3>설정</h3></a>
+                <a th:if="${memberDTO.admin}" th:href="@{/admin/contents}"><h3>관리자 페이지</h3></a>
             </div>
         </div>
     </div>
@@ -127,6 +127,10 @@
 <script th:src="@{https://kit.fontawesome.com/d1dbd1f9d9.js}" crossorigin="anonymous"></script>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/sidebar.js}"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js}"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
 <script th:inline="javascript">
     $(document).ready(function (e) {
         const cid = [[${dto.cid}]];
@@ -136,24 +140,27 @@
 
         // 댓글 추가 버튼 이벤트 처리
         $(".addReply_btn").click(function () {
-            const data = {
-                mid: mid,
-                cid: cid,
-                text: reply.val()
-            }
-            console.log(data);
-
-            $.ajax({
-                url: '/reply/' + cid,
-                type: "POST",
-                data: JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
-                dataType: "text",
-                success: function (result) {
-                    console.log("result : " + result);
-                    getContentReply();
+            if (reply.val() === "" || reply.val().length === 0) {
+                alert("댓글을 입력해주세요,")
+            } else {
+                const data = {
+                    mid: mid,
+                    cid: cid,
+                    text: reply.val()
                 }
-            });
+                $.ajax({
+                    url: '/reply/' + cid,
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "text",
+                    success: function (result) {
+                        console.log("추가된 댓글 번호 : " + result);
+                        document.querySelector(".addReply_input").value = "";
+                        getContentReply();
+                    }
+                });
+            }
         })
         // 전체 댓글 조회
         function getContentReply() {
@@ -161,9 +168,56 @@
                 let str = "";
 
                 $.each(arr, function (idx, reply) {
-                    console.log(reply);
+                    let time;
+                    const now = new Date();
+                    //글쓴 시간
+                    const writeDay = new Date(reply.regDate);
+                    //또는 파라미터로 시간을 넘겨받아서 계산할 수도 있음..
+                    let minus;
+                    //현재 년도랑 글쓴시간의 년도 비교
+                    if(now.getFullYear() > writeDay.getFullYear()){
+                        minus= now.getFullYear()-writeDay.getFullYear();
+                        //두개의 차이를 구해서 표시
+                        time = minus+"년 전";
+                    }else if(now.getMonth() > writeDay.getMonth()){
+                        //년도가 같을 경우 달을 비교해서 출력
+                        minus= now.getMonth()-writeDay.getMonth();
+                        time = minus+"달 전";
+                    }else if(now.getDate() > writeDay.getDate()){
+                        //같은 달일 경우 일을 계산
+                        minus= now.getDate()-writeDay.getDate();
+                        time = minus+"일 전";
+                    }else if(now.getDate() === writeDay.getDate()){
+                        //당일인 경우에는
+                        const nowTime = now.getTime();
+                        const writeTime = writeDay.getTime();
+                        if(nowTime>writeTime){
+                            //시간을 비교
+                            sec =parseInt(nowTime - writeTime) / 1000;
+                            day  = parseInt(sec/60/60/24);
+                            sec = (sec - (day * 60 * 60 * 24));
+                            hour = parseInt(sec/60/60);
+                            sec = (sec - (hour*60*60));
+                            min = parseInt(sec/60);
+                            sec = parseInt(sec-(min*60));
+                            if(hour>0){
+                                //몇시간전인지
+                                time = hour+"시간 전";
+                            }else if(min>0){
+                                //몇분전인지
+                                time = min+"분 전";
+                            }else if(sec>0){
+                                //몇초전인지 계산
+                                time = sec+"초 전";
+                            } else {
+                                time = "방금전";
+                            }
+                        } else {
+                            time = "방금전";
+                        }
+                    }
                     str += `
-                        <a href="#">
+                        <div style="margin-bottom: 5px;">
                             <div class="play-screen__content">
                                 <div class="play-screen__content-column">
                                     <div class="user-comment">
@@ -171,11 +225,13 @@
                                     </div>
                                 </div>
                                 <div class="play-screen__content-column">
-                                    <h5 class="user-comment__nickname">${reply.nickname}</h5>
+                                    <h5 class="user-comment__nickname">${reply.nickname}&nbsp;&nbsp;&nbsp;
+                                        <span id="time">${time}</span>
+                                    </h5>
                                     <h6 class="user-comment__text">${reply.text}</h6>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     `;
                 })
                 $(".replyList").html(str);
@@ -220,9 +276,6 @@
             $(".play-likes").html(str);
         }
     })
-
-    const audioPlay = document.querySelector("#audioPlay");
-    console.log(audioPlay.startDate);
 </script>
 
 </body>

@@ -2,6 +2,7 @@ package com.candlebe.gcoach.controller;
 
 import com.candlebe.gcoach.dto.MemberDTO;
 import com.candlebe.gcoach.entity.Member;
+import com.candlebe.gcoach.entity.MemberRole;
 import com.candlebe.gcoach.repository.MemberRepository;
 import com.candlebe.gcoach.security.dto.AuthMemberDTO;
 import com.candlebe.gcoach.service.MemberService;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Iterator;
+import java.util.Optional;
 
 /* 프로필 컨트롤러 */
 @Controller
@@ -53,33 +56,37 @@ public class ProfileController {
     public String postChangeNickname(@AuthenticationPrincipal AuthMemberDTO authMemberDTO,
                                      @Valid MemberDTO memberDTO, Errors errors, Model model, RedirectAttributes redirectAttributes) {
         log.info("postProfile_changeNickname..........");
-        Member member = memberRepository.findByUsername(authMemberDTO.getUsername(), authMemberDTO.isFormSocial()).orElseThrow();
-        boolean changeNickname = false;
-        log.info("기존 닉네임 : " + member.getNickname());
-        log.info("변경할 닉네임 : " + memberDTO.getNickname());
+        Optional<Member> members = memberRepository.findByUsername(authMemberDTO.getUsername(), authMemberDTO.isFormSocial());
+        if (members.isPresent()) {
+            Member member = members.get();
+            boolean changeNickname = false;
+            log.info("기존 닉네임 : " + member.getNickname());
+            log.info("변경할 닉네임 : " + memberDTO.getNickname());
 
-        if (errors.hasErrors()) {
-            log.info("-----닉네임 변경 유효성 검사 오류 확인-----");
-            for (FieldError error : errors.getFieldErrors()) {
-                if (error.getField().equals("nickname")) {
-                    log.info(String.format("valid_%s", error.getField()) + " : " + error.getDefaultMessage());
-                    changeNickname = true;
+            if (errors.hasErrors()) {
+                log.info("-----닉네임 변경 유효성 검사 오류 확인-----");
+                for (FieldError error : errors.getFieldErrors()) {
+                    if (error.getField().equals("nickname")) {
+                        log.info(String.format("valid_%s", error.getField()) + " : " + error.getDefaultMessage());
+                        changeNickname = true;
+                    }
                 }
+                log.info("----------------------------");
             }
-            log.info("----------------------------");
+            log.info("오류 여부 : " + changeNickname);
+            if (changeNickname) {
+                model.addAttribute("msg", "변경 실패");
+                return "/profile_changeNickname";
+            } else {
+                member.setNickname(memberDTO.getNickname());
+                memberRepository.save(member);
+                MemberDTO memberDTO2 = entityToDto(member);
+                model.addAttribute("msg", "닉네임 변경이 완료되었습니다.");
+                model.addAttribute("memberDTO", memberDTO2);
+                return "profile_main";
+            }
         }
-        log.info("오류 여부 : " + changeNickname);
-        if (changeNickname) {
-            model.addAttribute("msg", "변경 실패");
-            return "/profile_changeNickname";
-        } else {
-            member.setNickname(memberDTO.getNickname());
-            memberRepository.save(member);
-            MemberDTO memberDTO2 = entityToDto(member);
-            model.addAttribute("msg", "닉네임 변경이 완료되었습니다.");
-            model.addAttribute("memberDTO", memberDTO2);
-            return "profile_main";
-        }
+        return "redirect:/logout";
     }
     /* ***** */
 
@@ -94,31 +101,35 @@ public class ProfileController {
                                      @Valid MemberDTO memberDTO, Errors errors, Model model, RedirectAttributes redirectAttributes) {
 
         log.info("postProfile_changePassword..........");
-        Member member = memberRepository.findByUsername(authMemberDTO.getUsername(), authMemberDTO.isFormSocial()).orElseThrow();
-        log.info("변경할 비밀번호 : " + memberDTO.getPassword());
-        boolean checkError = false;
-        if (errors.hasErrors()) {
-            log.info("-----유효성 검사 오류 종류-----");
-            for (FieldError error : errors.getFieldErrors()) {
-                if (error.getField().equals("password") || error.getField().equals("confirmPassword") || error.getField().equals("checkPassword")) {
-                    log.info(String.format("valid_%s", error.getField()) + " : " + error.getDefaultMessage());
-                    checkError = true;
+        Optional<Member> members = memberRepository.findByUsername(authMemberDTO.getUsername(), authMemberDTO.isFormSocial());
+        if (members.isPresent()) {
+            Member member = members.get();
+            log.info("변경할 비밀번호 : " + memberDTO.getPassword());
+            boolean checkError = false;
+            if (errors.hasErrors()) {
+                log.info("-----유효성 검사 오류 종류-----");
+                for (FieldError error : errors.getFieldErrors()) {
+                    if (error.getField().equals("password") || error.getField().equals("confirmPassword") || error.getField().equals("checkPassword")) {
+                        log.info(String.format("valid_%s", error.getField()) + " : " + error.getDefaultMessage());
+                        checkError = true;
+                    }
                 }
+                log.info("----------------------------");
             }
-            log.info("----------------------------");
+            log.info("오류 여부 : " + checkError);
+            if (checkError) {
+                model.addAttribute("msg", "비밀번호 변경 실패");
+                return "/profile_changePassword";
+            } else {
+                member.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
+                memberRepository.save(member);
+                MemberDTO memberDTO2 = entityToDto(member);
+                model.addAttribute("msg", "비밀번호 변경이 완료되었습니다.");
+                model.addAttribute("memberDTO", memberDTO2);
+                return "profile_main";
+            }
         }
-        log.info("오류 여부 : " + checkError);
-        if (checkError) {
-            model.addAttribute("msg", "비밀번호 변경 실패");
-            return "/profile_changePassword";
-        } else {
-            member.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
-            memberRepository.save(member);
-            MemberDTO memberDTO2 = entityToDto(member);
-            model.addAttribute("msg", "비밀번호 변경이 완료되었습니다.");
-            model.addAttribute("memberDTO", memberDTO2);
-            return "profile_main";
-        }
+        return "redirect:/logout";
     }
 
     @RequestMapping("/checkPassword")
@@ -142,16 +153,20 @@ public class ProfileController {
     @PostMapping("/profile_changeInterest")
     public String  postChangeInterest(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, String interest, Model model) {
         log.info("postChangeInterest..........");
-        Member member = memberRepository.findByUsername(authMemberDTO.getUsername(), authMemberDTO.isFormSocial()).orElseThrow();
-        log.info("기존 회원의 관심사 : " + member.getInterest());
-        log.info("변경할 관심사 : " + interest);
-        member.setInterest(interest);
-        memberRepository.save(member);
-        log.info("변경 후 회원의 관심사 : " + member.getInterest());
-        MemberDTO memberDTO = entityToDto(member);
-        model.addAttribute("msg", "관심사 변경이 완료되었습니다.");
-        model.addAttribute("memberDTO", memberDTO);
-        return "profile_main";
+        Optional<Member> members = memberRepository.findByUsername(authMemberDTO.getUsername(), authMemberDTO.isFormSocial());
+        if (members.isPresent()) {
+            Member member = members.get();
+            log.info("기존 회원의 관심사 : " + member.getInterest());
+            log.info("변경할 관심사 : " + interest);
+            member.setInterest(interest);
+            memberRepository.save(member);
+            log.info("변경 후 회원의 관심사 : " + member.getInterest());
+            MemberDTO memberDTO = entityToDto(member);
+            model.addAttribute("msg", "관심사 변경이 완료되었습니다.");
+            model.addAttribute("memberDTO", memberDTO);
+            return "profile_main";
+        }
+        return "redirect:/logout";
     }
     /* ***** */
 
@@ -164,29 +179,42 @@ public class ProfileController {
     @PostMapping("/profile_changeEmotion")
     public String postChangeEmotion(@AuthenticationPrincipal AuthMemberDTO authMemberDTO, String emotion, Model model) {
         log.info("postChangeEmotion..........");
-        Member member = memberRepository.findByUsername(authMemberDTO.getUsername(), authMemberDTO.isFormSocial()).orElseThrow();
-        log.info("기존 회원의 감정 : " + member.getEmotion());
-        log.info("변경할 감정 : " + emotion);
-        member.setEmotion(emotion);
-        memberRepository.save(member);
-        log.info("변경 후 회원의 감정 : " + member.getEmotion());
-        MemberDTO memberDTO = entityToDto(member);
-        model.addAttribute("msg", "감정 변경이 완료되었습니다.");
-        model.addAttribute("memberDTO", memberDTO);
-        return "profile_main";
+        Optional<Member> members = memberRepository.findByUsername(authMemberDTO.getUsername(), authMemberDTO.isFormSocial());
+        if (members.isPresent()) {
+            Member member = members.get();
+            log.info("기존 회원의 감정 : " + member.getEmotion());
+            log.info("변경할 감정 : " + emotion);
+            member.setEmotion(emotion);
+            memberRepository.save(member);
+            log.info("변경 후 회원의 감정 : " + member.getEmotion());
+            MemberDTO memberDTO = entityToDto(member);
+            model.addAttribute("msg", "감정 변경이 완료되었습니다.");
+            model.addAttribute("memberDTO", memberDTO);
+            return "profile_main";
+        }
+        return "redirect:/logout";
     }
     /* ***** */
     private MemberDTO entityToDto(Member member) {
-        return MemberDTO.builder()
+        MemberDTO memberDTO = MemberDTO.builder()
                 .username(member.getUsername())
                 .password(member.getPassword())
-                .name(member.getName())
                 .nickname(member.getNickname())
+                .name(member.getName())
                 .phone(member.getPhone())
                 .formSocial(member.isFormSocial())
                 .socialType(member.getSocialType())
                 .interest(member.getInterest())
                 .emotion(member.getEmotion())
+                .checkLogin(true)
                 .build();
+
+        Iterator<MemberRole> it = member.getRoleSet().iterator();
+        if(it.hasNext()) {
+            if (it.next().toString().equals("ADMIN")) {
+                memberDTO.setAdmin(true);
+            }
+        }
+        return memberDTO;
     }
 }

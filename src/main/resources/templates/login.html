@@ -19,13 +19,13 @@
         <h1>로그인</h1>
     </div>
 
-    <form th:action="@{/login}" th:method="POST" id="login-form">
+    <form th:action="@{/login}" th:method="POST" id="login-form" name="login_form">
         <span>아이디</span>
-        <input name="username" type="text" />
+        <input name="username" type="text" onkeydown="checkSpace()" />
         <span>비밀번호</span>
-        <input name="password" type="password" />
+        <input name="password" type="password" onkeydown="checkSpace()" />
         <label><input type="checkbox" name="auto-login">로그인상태유지</label>
-        <input type="submit" value="로그인" />
+        <input type="button" value="로그인" onclick="login()" />
 
         <!-- 구글 로그인 -->
         <div class="googlebtn">
@@ -51,6 +51,41 @@
     if (msg !== null && msg !== "") {
         alert(msg);
     }
+
+    // 스페이스 입력 제한
+    function checkSpace() {
+        const kcode = event.keyCode;
+        if (kcode === 32) event.returnValue = false;
+    }
+
+    const login_form = document.login_form;
+    const username = login_form.username
+    const password = login_form.password
+
+    function login() {
+        if (username.value.length === 0 || username.value === "") {
+            username.focus();
+            alert("아이디를 입력해주세요");
+        } else if (password.value.length === 0 || password.value === "") {
+            password.focus();
+            alert("비밀번호를 입력해주세요");
+        } else if (username.value.length !== 0 && username.value !== "" && password.value.length !== 0 && password.value !== "") {
+            login_form.submit();
+        }
+    }
+
+    username.addEventListener("keypress", function (event) {
+        if (event.keyCode === 13) {
+            login();
+        }
+    })
+
+    password.addEventListener("keypress", function (event) {
+        if (event.keyCode === 13) {
+            login();
+        }
+    })
+
 </script>
 </body>
 </html>

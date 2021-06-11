@@ -1,10 +1,16 @@
 package com.candlebe.gcoach.controller;
 
 import com.candlebe.gcoach.dto.MemberDTO;
+import com.candlebe.gcoach.entity.Member;
+import com.candlebe.gcoach.entity.MemberRole;
+import com.candlebe.gcoach.repository.MemberRepository;
+import com.candlebe.gcoach.security.dto.AuthMemberDTO;
 import com.candlebe.gcoach.service.JoinService;
 import com.candlebe.gcoach.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -16,28 +22,34 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @Log4j2
 @RequiredArgsConstructor
 public class GcoachController {
 
+    private final MemberRepository memberRepository;
     private final MemberService memberService;
     private final JoinService joinService;
-
-    @GetMapping("/test")
-    public void testPage(){
-        log.info("testPage..........");
-    }
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
-    public void login() {
-        log.info("login..........");
+    public String login(@AuthenticationPrincipal AuthMemberDTO authMemberDTO) {
+        try {
+            Optional<Member> members = memberRepository.findByUsername(authMemberDTO.getUsername(), authMemberDTO.isFormSocial());
+            if (members.isPresent()) {
+                return "redirect:/";
+            }
+        } catch (Exception e) {
+            return "login";
+        }
+        return "login";
     }
 
     @PostMapping("/login")
-    public void postLogin() {
-        log.info("postLogin..........");
+    public String postLogin() {
+        return "login";
     }
 
     @RequestMapping("/checkUsername")
@@ -63,7 +75,7 @@ public class GcoachController {
     @GetMapping("/join")
     public String join(MemberDTO memberDTO) {
         log.info("join..........");
-        return "/join";
+        return "join";
     }
 
     @PostMapping("/join")
@@ -73,6 +85,7 @@ public class GcoachController {
         log.info("비밀번호 : " + memberDTO.getPassword());
         log.info("비밀번호 확인 : " + memberDTO.getConfirmPassword());
         log.info("이름 : " + memberDTO.getName());
+        log.info("닉네임 : " + memberDTO.getNickname());
         log.info("휴대폰 : " + memberDTO.getPhone());
 
         if (errors.hasErrors()) {
@@ -85,7 +98,7 @@ public class GcoachController {
             }
             log.info("----------------------------");
 
-            return "/join";
+            return "join";
         }
 
         String result = joinService.join(memberDTO);
@@ -97,6 +110,20 @@ public class GcoachController {
             redirectAttributes.addFlashAttribute("msg", "회원가입 성공");
             return "redirect:/login";
         }
+        return "redirect:/login";
+    }
+
+    @GetMapping("/createAdmin")
+    public String createAdmin() {
+        Member member = Member.builder()
+                .username("admin")
+                .password(passwordEncoder.encode("1111"))
+                .name("관리자1")
+                .nickname("관리자1")
+                .phone("01012345678")
+                .build();
+        member.addMemberRole(MemberRole.ADMIN);
+        memberRepository.save(member);
         return "redirect:/login";
     }
 }

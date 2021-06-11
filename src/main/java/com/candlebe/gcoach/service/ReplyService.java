@@ -25,7 +25,7 @@ public interface ReplyService {
         return ReplyDTO.builder()
                 .rid(reply.getRid())
                 .mid(reply.getMember().getMid())
-                .nickname(reply.getMember().getName())
+                .nickname(reply.getMember().getNickname())
                 .cid(reply.getContent().getCid())
                 .text(reply.getText())
                 .regDate(reply.getRegDate())

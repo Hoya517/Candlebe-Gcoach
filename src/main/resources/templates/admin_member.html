@@ -7,6 +7,7 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/member.css}" />
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -21,62 +22,120 @@
   </head>
 
   <body>
-    <header>
+  <header>
       <a th:href="@{/}"><img th:src="@{/images/logo_white.png}" /></a>
-      <a th:href="@{/admin/members}" class="member-page">
-        <h1>회원 관리</h1>
-      </a>
       <a th:href="@{/admin/contents}" class="contents-page">
-        <h1>콘텐츠 관리</h1>
+          <h1>콘텐츠 관리</h1>
       </a>
       <a th:href="@{/admin/contents/upload}" class="upload-page">
-        <h1>콘텐츠 업로드</h1>
+          <h1>콘텐츠 업로드</h1>
       </a>
-    </header>
+      <a th:href="@{/admin/members}" class="member-page">
+          <h1>회원 관리</h1>
+      </a>
+  </header>
     <h1 class="form-title">회원관리</h1>
-    <!--
-    <h1 class="form-title">G-COACH에 콘텐츠가 성공적으로 업로드 되었습니다!</h1>
-    -->
+    <!-- 검색창 -->
+    <form th:action="@{/admin/members}" th:method="GET" id="searchForm">
+      <div class="input-group">
+        <input type="hidden" name="page" value="1">
+        <div class="input-group-prepend">
+          <select class="custom-select" name="type">
+            <option value="i" selected>아이디</option>
+            <option value="n">이름</option>
+            <option value="ni">닉네임</option>
+            <option value="p">전화번호</option>
+          </select>
+        </div>
+        <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
+        <div class="input-group-append" id="button-addon4">
+          <button type="button" class="btn btn-outline-secondary btn-search">Search</button>
+          <button type="button" class="btn btn-outline-secondary btn-clear">Clear</button>
+        </div>
+      </div>
+    </form>
     <form action="" id="memberForm">
       <table class="table table-sm">
         <thead class="thead-dark">
           <tr>
-            <th scope="col" class="th1">순서</th>
-            <th scope="col" class="th2">가입날짜</th>
-            <th scope="col" class="th3">감정</th>
-            <th scope="col" class="th4">관심사</th>
-            <th scope="col" class="th5">이름</th>
-            <th scope="col" class="th6">닉네임</th>
-            <th scope="col" class="th7">전화번호</th>
+            <th scope="col" class="th1">번호</th>
+            <th scope="col" class="th2">아이디</th>
+            <th scope="col" class="th3">이름</th>
+            <th scope="col" class="th4">닉네임</th>
+            <th scope="col" class="th5">전화번호</th>
+            <th scope="col" class="th6">감정</th>
+            <th scope="col" class="th7">관심사</th>
             <th scope="col" class="th8">소셜로그인타입</th>
-            <th scope="col" class="th9">아이디</th>
-            <th scope="col" class="th10" colspan="2">관리</th>
+            <th scope="col" class="th9">관리</th>
           </tr>
         </thead>
         <tbody>
-          <tr th:each="member : ${members}">
-            <th th:text="${member.mid}" scope="row">1</th>
-            <td th:text="${member.regDate}"></td>
-            <td th:text="${member.emotion}"></td>
-            <td th:text="${member.interest}"></td>
-            <td th:text="${member.name}"></td>
-            <td th:text="${member.nickname}"></td>
-            <td th:text="${member.phone}"></td>
-            <td th:text="${member.socialType}"></td>
-            <td th:text="${member.username}"></td>
-            <td><a th:href="'javascript:deleteMember('+${member.mid}+')'">삭제</a></td>
+          <tr th:each="dto : ${result.dtoList}">
+            <th th:text="${dto.mid}" scope="row">1</th>
+            <td th:text="${dto.username}"></td>
+            <td th:text="${dto.name}"></td>
+            <td th:text="${dto.nickname}"></td>
+            <td th:text="${dto.phone}"></td>
+            <td th:text="${dto.emotion}"></td>
+            <td th:text="${dto.interest}"></td>
+            <td th:text="${dto.socialType}"></td>
+            <td><a th:href="'javascript:deleteMember('+${dto.mid}+')'" style="color: red">삭제</a></td>
           </tr>
         </tbody>
       </table>
     </form>
   </body>
+  <!-- pagination -->
+  <ul class="pagination h-100 justify-content-center align-items-center">
+    <li class="page-item" th:if="${result.prev}">
+      <a class="page-link" th:href="@{/admin/members(
+                    page = ${result.start-1},
+                    type = ${pageRequestDTO.type},
+                    keyword = ${pageRequestDTO.keyword})}" tabindex="-1">Previous
+      </a>
+    </li>
+    <li th:class="'page-item ' + ${result.page == page ? 'active' : ''}"
+        th:each="page : ${result.pageList}">
+      <a class="page-link" th:href="@{/admin/members(
+                    page = ${page},
+                    type = ${pageRequestDTO.type},
+                    keyword = ${pageRequestDTO.keyword})}">[[${page}]]
+      </a>
+    </li>
+    <li class="page-item" th:if="${result.next}">
+      <a class="page-link" th:href="@{/admin/members(
+                    page = ${result.end+1},
+                    type = ${pageRequestDTO.type},
+                    keyword = ${pageRequestDTO.keyword})}">NEXT
+      </a>
+    </li>
+  </ul>
+  <script th:src="@{/jquery/jquery.min.js}"></script>
+  <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
   <script>
     function deleteMember(mid) {
-      var form = document.createElement("form");
+      const url = document.location.href;
+      console.log(url);
+      const input_hidden = document.createElement('input');
+      input_hidden.setAttribute("type", "hidden");
+      input_hidden.setAttribute("name", "url");
+      input_hidden.setAttribute("value", url);
+      const form = document.createElement("form");
       form.setAttribute("method", "post");
       form.setAttribute("action", "/admin/members/" + mid + "/delete");
+      form.appendChild(input_hidden);
       document.body.appendChild(form);
       form.submit();
     }
+
+    // 검색 이벤트 처리
+    const searchForm = $("#searchForm");
+    $('.btn-search').click(function () {
+      searchForm.submit();
+    })
+
+    $(".btn-clear").click(function () {
+      searchForm.empty().submit();
+    });
   </script>
 </html>

@@ -77,7 +77,7 @@
     });
 
     let check = false;
-    confirmText.blur(function (){
+    confirmText.on("propertychange change keyup paste input", function (){
         if (confirmText.val() !== "" && confirmText.val() === "삭제하겠습니다") {
             document.getElementById("deleteBtn").style.opacity = "1";
             check = true;

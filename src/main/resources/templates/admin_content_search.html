@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-  <head>
+<head>
     <link
-      rel="stylesheet"
-      th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
+            rel="stylesheet"
+            th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+            crossorigin="anonymous"
     />
     <link rel="stylesheet" th:href="@{/css/content.css}" />
     <meta charset="UTF-8" />
@@ -13,67 +13,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>콘텐츠 관리 페이지</title>
     <style>
-      .contents-page h1 {
-        color: #ffffff;
-        opacity: 1;
-      }
+        .contents-page h1 {
+            color: #ffffff;
+            opacity: 1;
+        }
     </style>
-  </head>
+</head>
 
-  <body>
-    <header>
-      <a th:href="@{/}"><img th:src="@{/images/logo_white.png}" /></a>
-      <a th:href="@{/admin/members}" class="member-page">
-        <h1>회원 관리</h1>
-      </a>
-      <a th:href="@{/admin/contents}" class="contents-page">
+<body>
+<header>
+    <a th:href="@{/}"><img th:src="@{/images/logo_white.png}" /></a>
+    <a th:href="@{/admin/contents}" class="contents-page">
         <h1>콘텐츠 관리</h1>
-      </a>
-      <a th:href="@{/admin/contents/upload}" class="upload-page">
+    </a>
+    <a th:href="@{/admin/contents/upload}" class="upload-page">
         <h1>콘텐츠 업로드</h1>
-      </a>
-    </header>
-    <div class="top">
-      <h1 class="form-title">콘텐츠 관리</h1>
-      <form th:action="@{/admin/content}" th:method="get" name="searchForm" id="searchForm">
+    </a>
+    <a th:href="@{/admin/members}" class="member-page">
+        <h1>회원 관리</h1>
+    </a>
+</header>
+<div class="top">
+    <h1 class="form-title">콘텐츠 관리</h1>
+    <form th:action="@{/admin/content}" th:method="get" name="searchForm" id="searchForm">
         <select name="category" id="select-category">
-          <option value="">category</option>
-          <option value="호흡">호흡</option>
-          <option value="명상">명상</option>
-          <option value="힐링">힐링</option>
-          <option value="행복">행복</option>
-          <option value="숙면">숙면</option>
-          <option value="관계증진">관계증진</option>
-          <option value="집중력">집중력</option>
-          <option value="자기이해">자기이해</option>
-          <option value="긍정">긍정</option>
-          <option value="건강">건강</option>
-          <option value="자존감">자존감</option>
-          <option value="스트레스">스트레스</option>
-          <option value="운동">운동</option>
-          <option value="즐거움">즐거움</option>
-          <option value="슬픔">슬픔</option>
-          <option value="외로움">외로움</option>
-          <option value="우울">우울</option>
-          <option value="화">화</option>
-          <option value="불안">불안</option>
-          <option value="게으름">게으름</option>
-          <option value="피곤">피곤</option>
-          <option value="힘듦">힘듦</option>
-          <option value="짬짬히">짬짬히</option>
-          <option value="자기계발">자기계발</option>
-          <option value="키즈">키즈</option>
-          <option value="asmr">asmr</option>
+            <option value="">category</option>
+            <option value="호흡">호흡</option>
+            <option value="명상">명상</option>
+            <option value="힐링">힐링</option>
+            <option value="행복">행복</option>
+            <option value="숙면">숙면</option>
+            <option value="관계증진">관계증진</option>
+            <option value="집중력">집중력</option>
+            <option value="자기이해">자기이해</option>
+            <option value="긍정">긍정</option>
+            <option value="건강">건강</option>
+            <option value="자존감">자존감</option>
+            <option value="스트레스">스트레스</option>
+            <option value="운동">운동</option>
+            <option value="즐거움">즐거움</option>
+            <option value="슬픔">슬픔</option>
+            <option value="외로움">외로움</option>
+            <option value="우울">우울</option>
+            <option value="화">화</option>
+            <option value="불안">불안</option>
+            <option value="게으름">게으름</option>
+            <option value="피곤">피곤</option>
+            <option value="힘듦">힘듦</option>
+            <option value="짬짬히">짬짬히</option>
+            <option value="자기계발">자기계발</option>
+            <option value="키즈">키즈</option>
+            <option value="asmr">asmr</option>
         </select>
         <input class="main-header__right-input" name="search" type="text" placeholder="제목을 검색해주세요.">
         <button class="main-header__right-icon" type="submit"><i class="fas fa-search"></i></button>
-      </form>
-    </div>
+    </form>
+</div>
 
-    <form action="" id="contentForm">
-      <table class="table table-sm">
+<form action="" id="contentForm">
+    <table class="table table-sm">
         <thead class="thead-dark">
-          <tr>
+        <tr>
             <th scope="col" class="th1">순서</th>
             <th scope="col" class="th4">제목</th>
             <th scope="col" class="th5">내용</th>
@@ -81,13 +81,13 @@
             <th scope="col" class="th7">카테고리2</th>
             <th scope="col" class="th8">카테고리3</th>
             <th scope="col" class="th12">관리</th>
-          </tr>
+        </tr>
         </thead>
         <tbody>
         <div th:if="contents==null">
-          <h1 class="form-title">G-COACH에 콘텐츠를 업로드해주세요.</h1>
+            <h1 class="form-title">G-COACH에 콘텐츠를 업로드해주세요.</h1>
         </div>
-          <tr th:each="content : ${contents}">
+        <tr th:each="content : ${contents}">
             <th th:text="${content.cid}" scope="row"></th>
 
             <!-- 이거 누르면 admin_content_cid.html로 이동-->
@@ -99,19 +99,19 @@
             <td th:text="${content.category2}"></td>
             <td th:text="${content.category3}"></td>
             <td><a th:href="'javascript:deleteContent('+${content.cid}+')'">삭제</a></td>
-          </tr>
+        </tr>
         </tbody>
-      </table>
-    </form>
-  </body>
-  <script th:src="@{https://kit.fontawesome.com/d1dbd1f9d9.js}" crossorigin="anonymous"></script>
-  <script>
+    </table>
+</form>
+</body>
+<script th:src="@{https://kit.fontawesome.com/d1dbd1f9d9.js}" crossorigin="anonymous"></script>
+<script>
     function deleteContent(cid) {
-      var form = document.createElement("form");
-      form.setAttribute("method", "post");
-      form.setAttribute("action", "/admin/contents/" + cid + "/delete");
-      document.body.appendChild(form);
-      form.submit();
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/admin/contents/" + cid + "/delete");
+        document.body.appendChild(form);
+        form.submit();
     }
-  </script>
+</script>
 </html>

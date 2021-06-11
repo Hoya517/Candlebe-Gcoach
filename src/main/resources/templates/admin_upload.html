@@ -18,14 +18,14 @@
 <body>
     <header>
         <a th:href="@{/}"><img th:src="@{/images/logo_white.png}" /></a>
-        <a th:href="@{/admin/members}" class="member-page">
-            <h1>회원 관리</h1>
-        </a>
         <a th:href="@{/admin/contents}" class="contents-page">
             <h1>콘텐츠 관리</h1>
         </a>
         <a th:href="@{/admin/contents/upload}" class="upload-page">
             <h1>콘텐츠 업로드</h1>
+        </a>
+        <a th:href="@{/admin/members}" class="member-page">
+            <h1>회원 관리</h1>
         </a>
     </header>
     <div th:if="${message==null || message==''}">
@@ -83,7 +83,7 @@
                         <option value="명상">명상</option>
                         <option value="힐링">힐링</option>
                         <option value="행복">행복</option>
-                        <option value="수면">숙면</option>
+                        <option value="숙면">숙면</option>
                         <option value="관계증진">관계증진</option>
                         <option value="집중력">집중력</option>
                         <option value="자기이해">자기이해</option>
@@ -112,7 +112,7 @@
                         <option value="명상">명상</option>
                         <option value="힐링">힐링</option>
                         <option value="행복">행복</option>
-                        <option value="수면">숙면</option>
+                        <option value="숙면">숙면</option>
                         <option value="관계증진">관계증진</option>
                         <option value="집중력">집중력</option>
                         <option value="자기이해">자기이해</option>

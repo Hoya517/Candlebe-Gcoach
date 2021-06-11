@@ -20,7 +20,7 @@ public interface JoinService {
                 .username(dto.getUsername())
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .name(dto.getName())
-                .nickname(dto.getName())
+                .nickname(dto.getNickname())
                 .phone(dto.getPhone())
                 .formSocial(false)
                 .build();

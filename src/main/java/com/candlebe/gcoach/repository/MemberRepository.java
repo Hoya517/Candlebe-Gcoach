@@ -1,6 +1,7 @@
 package com.candlebe.gcoach.repository;
 
 import com.candlebe.gcoach.entity.Member;
+import com.candlebe.gcoach.repository.search.SearchMemberRepository;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long>, SearchMemberRepository {
     @EntityGraph(attributePaths = {"roleSet"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT m FROM Member m " +
             "WHERE m.formSocial = :social AND m.username = :username")

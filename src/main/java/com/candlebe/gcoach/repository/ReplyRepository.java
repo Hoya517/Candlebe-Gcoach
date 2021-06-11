@@ -14,10 +14,15 @@ import java.util.List;
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     @EntityGraph(attributePaths = {"member"}, type = EntityGraph.EntityGraphType.FETCH)
-    List<Reply> findByContent(Content content);
+    List<Reply> findByContentOrderByRidDesc(Content content);
 
     @Modifying
     @Transactional
     @Query("DELETE FROM Reply r WHERE r.member = :member")
     void deleteReplies(Member member);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Reply r WHERE r.content = :content")
+    void deleteReplies(Content content);
 }

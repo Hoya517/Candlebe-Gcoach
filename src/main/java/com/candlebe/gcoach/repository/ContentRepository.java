@@ -1,6 +1,7 @@
 package com.candlebe.gcoach.repository;
 
 import com.candlebe.gcoach.entity.Content;
+import com.candlebe.gcoach.repository.search.SearchContentRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public interface ContentRepository extends JpaRepository<Content, Long> {
+public interface ContentRepository extends JpaRepository<Content, Long>, SearchContentRepository {
 
     // 해당 카테고리로 콘텐츠 조회
     @Query("SELECT t FROM Content t WHERE t.category1 = :category or t.category2 = :category or t.category3 = :category")

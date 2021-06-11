@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @Log4j2
@@ -116,71 +117,76 @@ public class MainController {
 
         log.info("---------------플레이화면---------------");
         // 로그인한 회원 정보
-        Member member = memberRepository.findByUsername(authMemberDTO.getUsername(), authMemberDTO.isFormSocial()).orElseThrow();
+        Optional<Member> members = memberRepository.findByUsername(authMemberDTO.getUsername(), authMemberDTO.isFormSocial());
         // id 값에 맞는 콘텐츠
-        Content content = contentRepository.findById(id).orElseThrow();
-        // 해당 회원이 해당 콘텐츠에 좋아요를 눌렀는지
-        boolean likeCheck = likeRepository.findByMemberAndContent(member, content).isPresent();
-        // 해당 콘텐츠의 총 좋아요 수
-        int likeCount = likeRepository.likeCount(content);
+        Optional<Content> contentResult = contentRepository.findById(id);
+        if (members.isPresent() && contentResult.isPresent()) {
+            Member member = members.get();
+            Content content = contentResult.get();
+            // 해당 회원이 해당 콘텐츠에 좋아요를 눌렀는지
+            boolean likeCheck = likeRepository.findByMemberAndContent(member, content).isPresent();
+            // 해당 콘텐츠의 총 좋아요 수
+            int likeCount = likeRepository.likeCount(content);
 
-        // 콘텐츠를 담는 리스트
-        List<Content> contents = new ArrayList<>();
-        // 카테고리를 담는 리스트
-        ArrayList<String> categoryList = new ArrayList<>();
+            // 콘텐츠를 담는 리스트
+            List<Content> contents = new ArrayList<>();
+            // 카테고리를 담는 리스트
+            ArrayList<String> categoryList = new ArrayList<>();
 
-        // 콘텐츠의 카테고리가 null 일 경우 빈 문자열로 변환 (NullPoint Exception 방지)
-        String category1 = content.getCategory1() == null ? "" : content.getCategory1();
-        String category2 = content.getCategory2() == null ? "" : content.getCategory2();
-        String category3 = content.getCategory3() == null ? "" : content.getCategory3();
-        log.info("category1 : " + category1);
-        log.info("category2 : " + category2);
-        log.info("category3 : " + category3);
+            // 콘텐츠의 카테고리가 null 일 경우 빈 문자열로 변환 (NullPoint Exception 방지)
+            String category1 = content.getCategory1() == null ? "" : content.getCategory1();
+            String category2 = content.getCategory2() == null ? "" : content.getCategory2();
+            String category3 = content.getCategory3() == null ? "" : content.getCategory3();
+            log.info("category1 : " + category1);
+            log.info("category2 : " + category2);
+            log.info("category3 : " + category3);
 
-        // 카테고리가 빈 값이 아닐경우 카테고리리스트에 추가
-        if (category1 != null && !category1.equals("")) categoryList.add(category1);
-        if (category2 != null && !category2.equals("")) categoryList.add(category2);
-        if (category3 != null && !category3.equals("")) categoryList.add(category3);
-        log.info("categoryList : " + categoryList);
+            // 카테고리가 빈 값이 아닐경우 카테고리리스트에 추가
+            if (category1 != null && !category1.equals("")) categoryList.add(category1);
+            if (category2 != null && !category2.equals("")) categoryList.add(category2);
+            if (category3 != null && !category3.equals("")) categoryList.add(category3);
+            log.info("categoryList : " + categoryList);
 
-        // 카테고리에 맞는 콘텐츠들을 List 에 저장
-        if (categoryList.size() == 1) { // 카테고리가 하나일 경우
-            contents = contentService.findContentsByCategory(categoryList.get(0));
-        } else if (categoryList.size() == 2) { // 카테고리가 두개일 경우
-            contents = contentService.findContentsByCategory(categoryList.get(0), categoryList.get(1));
-        } else if (categoryList.size() == 3) { // 카테고리가 세개일 경우
-            contents = contentService.findContentsByCategory(categoryList.get(0), categoryList.get(1), categoryList.get(2));
-        }
-
-        // 현재 플레이중인 콘텐츠는 콘텐츠 리스트에서 제외
-        for (int i = 0; i < contents.size(); i++) {
-            if (contents.get(i).getCid().equals(id)) {
-                contents.remove(contents.get(i));
+            // 카테고리에 맞는 콘텐츠들을 List 에 저장
+            if (categoryList.size() == 1) { // 카테고리가 하나일 경우
+                contents = contentService.findContentsByCategory(categoryList.get(0));
+            } else if (categoryList.size() == 2) { // 카테고리가 두개일 경우
+                contents = contentService.findContentsByCategory(categoryList.get(0), categoryList.get(1));
+            } else if (categoryList.size() == 3) { // 카테고리가 세개일 경우
+                contents = contentService.findContentsByCategory(categoryList.get(0), categoryList.get(1), categoryList.get(2));
             }
+
+            // 현재 플레이중인 콘텐츠는 콘텐츠 리스트에서 제외
+            for (int i = 0; i < contents.size(); i++) {
+                if (contents.get(i).getCid().equals(id)) {
+                    contents.remove(contents.get(i));
+                }
+            }
+
+            PlayDTO playDTO = PlayDTO.builder()
+                    .mid(member.getMid())
+                    .nickname(member.getNickname())
+                    .cid(content.getCid())
+                    .contentName(content.getOriginalName())
+                    .imgOriginalName(content.getImgOriginalName())
+                    .likeCount(likeCount)
+                    .likeCheck(likeCheck)
+                    .build();
+
+            History history = History.builder()
+                    .member(member)
+                    .content(content)
+                    .build();
+            historyRepository.save(history);
+
+            log.info("playDTO : " + playDTO);
+            log.info("contents : " + contents);
+            MemberDTO memberDTO = memberService.authMemberDtoToMemberDto(authMemberDTO);
+            model.addAttribute("memberDTO", memberDTO);
+            model.addAttribute("dto", playDTO);
+            model.addAttribute("contents", contents);
+            return "play";
         }
-
-        PlayDTO playDTO = PlayDTO.builder()
-                .mid(member.getMid())
-                .nickname(member.getNickname())
-                .cid(content.getCid())
-                .contentName(content.getOriginalName())
-                .imgOriginalName(content.getImgOriginalName())
-                .likeCount(likeCount)
-                .likeCheck(likeCheck)
-                .build();
-
-        History history = History.builder()
-                .member(member)
-                .content(content)
-                .build();
-        historyRepository.save(history);
-
-        log.info("playDTO : " + playDTO);
-        log.info("contents : " + contents);
-        MemberDTO memberDTO = memberService.authMemberDtoToMemberDto(authMemberDTO);
-        model.addAttribute("memberDTO", memberDTO);
-        model.addAttribute("dto", playDTO);
-        model.addAttribute("contents", contents);
-        return "play";
+        return "redirect:/logout";
     }
 }

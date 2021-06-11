@@ -26,23 +26,22 @@ public class MemberUserDetailsService implements UserDetailsService {
         log.info("MemberUserDetailsService loadUserByUsername : " + username);
 
         Optional<Member> result = memberRepository.findByUsername(username, false);
-        if (result.isEmpty()) {
-            throw new UsernameNotFoundException("Check Email or Social");
+        if (result.isPresent()) {
+            Member member = result.get();
+            log.info("Member : " + member);
+
+            AuthMemberDTO authMemberDTO = new AuthMemberDTO(
+                    member.getUsername(),
+                    member.getPassword(),
+                    member.isFormSocial(),
+                    member.getRoleSet().stream().map(role ->
+                            new SimpleGrantedAuthority("ROLE_" + role.name())
+                    ).collect(Collectors.toSet())
+            );
+            authMemberDTO.setName(member.getName());
+
+            return authMemberDTO;
         }
-
-        Member member = result.get();
-        log.info("Member : " + member);
-
-        AuthMemberDTO authMemberDTO = new AuthMemberDTO(
-                member.getUsername(),
-                member.getPassword(),
-                member.isFormSocial(),
-                member.getRoleSet().stream().map(role ->
-                    new SimpleGrantedAuthority("ROLE_" + role.name())
-                ).collect(Collectors.toSet())
-        );
-        authMemberDTO.setName(member.getName());
-
-        return authMemberDTO;
+        throw new UsernameNotFoundException("Check Email or Social");
     }
 }

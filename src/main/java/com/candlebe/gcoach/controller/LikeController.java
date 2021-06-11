@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 @Log4j2
 @RequiredArgsConstructor
@@ -27,10 +29,15 @@ public class LikeController {
     public String addLike(@RequestBody PlayDTO dto) {
         log.info("----------좋아요----------");
         log.info("dto : " + dto);
-        Member member = memberRepository.findById(dto.getMid()).orElseThrow();
-        Content content = contentRepository.findById(dto.getCid()).orElseThrow();
-        boolean likeCheck = likeService.addLike(member.getMid(), content.getCid());
-        int likeCount = likeRepository.likeCount(content);
-        return "{\"likeCheck\":"+ likeCheck + ",\"likeCount\":" + likeCount + "}";
+        Optional<Member> members = memberRepository.findById(dto.getMid());
+        Optional<Content> contents = contentRepository.findById(dto.getCid());
+        if (members.isPresent() && contents.isPresent()) {
+            Member member = members.get();
+            Content content = contents.get();
+            boolean likeCheck = likeService.addLike(member.getMid(), content.getCid());
+            int likeCount = likeRepository.likeCount(content);
+            return "{\"likeCheck\":"+ likeCheck + ",\"likeCount\":" + likeCount + "}";
+        }
+        return "redirect:/logout";
     }
 }

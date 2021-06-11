@@ -30,7 +30,7 @@
   border: none;
 }
 
-#login-form input:not([type="submit"]) {
+#login-form input:not([type="button"]) {
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
@@ -43,7 +43,7 @@
   font-weight: bold;
 }
 
-#login-form input[type="submit"] {
+#login-form input[type="button"] {
   border-radius: 10px;
   background-color: #172853;
   box-shadow: 1px 1px 1px grey;
@@ -52,7 +52,7 @@
   cursor: pointer;
 }
 
-#login-form input[type="submit"]:hover {
+#login-form input[type="button"]:hover {
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.9);
 }
 
@@ -166,7 +166,7 @@
     font-weight: bold;
   }
 
-  #login-form input[type="submit"] {
+  #login-form input[type="button"] {
     height: 60px;
   }
 
@@ -211,7 +211,7 @@
     font-weight: bold;
   }
 
-  #login-form input[type="submit"] {
+  #login-form input[type="button"] {
     height: 55px;
   }
 
@@ -262,7 +262,7 @@
     font-weight: bold;
   }
 
-  #login-form input[type="submit"] {
+  #login-form input[type="button"] {
     height: 45px;
   }
 
@@ -358,7 +358,7 @@
     font-weight: bold;
   }
 
-  #login-form input[type="submit"] {
+  #login-form input[type="button"] {
     margin: 20px 0;
     height: 80px;
   }

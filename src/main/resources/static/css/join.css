@@ -47,7 +47,7 @@
   
 #join-form input::placeholder {
     color: rgba(0, 0, 0, 0.2);
-    font-size: 24px;
+    font-size: 0.6rem;
     font-weight: 600;
   }
   
@@ -73,7 +73,6 @@
     cursor: pointer;
 }
 
-  
   @media screen and (max-width: 400px) {
     .G-COACH__title {
       width: 85%;
@@ -108,8 +107,8 @@
     }
 
     #join-form input::placeholder {
-      color: rgba(0, 0, 0, 0.2);
-      font-size: 24px;
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 0.6rem;
       font-weight: 600;
     }
   
@@ -121,6 +120,27 @@
       width: 100%;
     }
   }
+
+@media screen and (max-width: 320px) {
+    #join-form input[type="submit"] {
+        height: 36px;
+        font-size: 10px;
+    }
+
+    #join-form a {
+        font-size: 12px;
+    }
+
+    .input_1 {
+        width: 100%;
+    }
+
+    #join-form input::placeholder {
+        color: rgba(0, 0, 0, 0.4);
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+}
   
   @media screen and (min-height: 900px) {
     .G-COACH__title {
@@ -161,34 +181,13 @@
     }
 
     #join-form input::placeholder {
-      color: rgba(0, 0, 0, 0.2);
-      font-size: 24px;
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 1.3rem;
       font-weight: 600;
     }
   
     #join-form a {
       margin: 20px 0;
       font-size: 30px;
-    }
-  }
-
-  @media screen and (max-width: 320px) {
-    #join-form input[type="submit"] {
-      height: 36px;
-      font-size: 10px;
-    }
-  
-    #join-form a {
-      font-size: 12px;
-    }
-
-    .input_1 {
-      width: 100%;
-    }
-
-    #join-form input::placeholder {
-      color: rgba(0, 0, 0, 0.2);
-      font-size: 24px;
-      font-weight: 600;
     }
   }
